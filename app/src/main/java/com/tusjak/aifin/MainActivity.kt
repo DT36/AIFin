@@ -8,14 +8,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.tusjak.aifin.navigation.NavGraph
+import com.tusjak.aifin.navigation.Screen
 import com.tusjak.aifin.theme.AIFinTheme
 import com.tusjak.aifin.theme.surfaceBackground
 import com.tusjak.aifin.theme.value
-import com.tusjak.aifin.ui.BottomNavigationBar
+import com.tusjak.aifin.ui.common.BottomNavigationBar
 
 class MainActivity : ComponentActivity() {
 
@@ -25,20 +29,31 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AIFinTheme {
-                MainScreen()
+                AIFinApp()
             }
         }
     }
 }
 
 @Composable
-fun MainScreen() {
+fun AIFinApp() {
     val navController = rememberNavController()
+
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+
+    val showBottomBar = remember(currentBackStackEntry) {
+        currentBackStackEntry?.destination?.route in listOf(
+            Screen.HOME.name,
+            Screen.ANALYSIS.name,
+            Screen.TRANSACTIONS.name,
+            Screen.PROFILE.name,
+        )
+    }
 
     Scaffold(
         containerColor = surfaceBackground.value,
         contentWindowInsets = WindowInsets.safeDrawing,
-        bottomBar = { BottomNavigationBar(navController) }
+        bottomBar = { if (showBottomBar) BottomNavigationBar(navController) }
     ) { paddingValues ->
         NavGraph(
             navController = navController,

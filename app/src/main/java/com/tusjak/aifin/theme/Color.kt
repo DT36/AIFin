@@ -108,7 +108,7 @@ val tintActionOnInverted    = Palette(Color(0xFF0097FD), Color(0xFF0097FD))
 val solidInfo         = Palette(Color(0xFF0FA4B9), Color(0xFF12CAE3))
 val solidSuccess      = Palette(Color(0xFF18B243), Color(0xFF1DDB52))
 val solidWarning      = Palette(Color(0xFFCC9C2E), Color(0xFFFBC038))
-val solidDanger       = Palette(Color(0xFFCC3942), Color(0xFF18B243))
+val solidDanger       = Palette(Color(0xFFCC3942), Color(0xFFFB4651))
 val solidSelection    = Palette(Color(0xFF36ADFD), Color(0xFF0097FD))
 val solidAccentInvert = Palette(Color(0xFF1F1E2A), Color(0xFF1F1E2A))
 
@@ -172,3 +172,19 @@ val charadesRandomGradientRight = Brush.horizontalGradient(listOf(Color(0xFF100F
 val charadesRandomGradientLeft  = Brush.horizontalGradient(listOf(Color(0xFF100F15).copy(alpha = 0f), Color(0xFF100F15).copy(alpha = 1.0f)))
 
 val yellow = Palette(Color(0xFFFFDC18), Color(0xFFF6CA35))
+val caribbeanGreen = Palette(Color(0xFF00D09E), Color(0xFF00D09E))
+
+val honeydew = Color(0xFFF1FFF3)
+val lightGreen = Color(0xFFDFF7E2)
+val caribbeanGreenColor = Color(0xFF00D09E)
+val cyprus = Color(0xFF0E3E3E)
+val fenceGreen = Color(0xFF052224)
+val void = Color(0xFF031314)
+val lightBlue = Color(0xFF6DB6FE)
+val vividBlue = Color(0xFF3299FF)
+val OceanBlue = Color(0xFF0068FF)
+
+val background = Palette(Color(0xFFF1FFF3), Color(0xFF052224))
+val mainGreen = Palette(Color(0xFF00D09E), Color(0xFF00D09E))
+val secondaryGreen = Palette(Color(0xFFDFF7E2), Color(0xFFDFF7E2))
+val textColor = Palette(Color(0xFF1F1E2A), Color(0xFFDFF7E2))

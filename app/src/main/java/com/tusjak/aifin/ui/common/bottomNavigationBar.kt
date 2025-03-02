@@ -1,4 +1,4 @@
-package com.tusjak.aifin.ui
+package com.tusjak.aifin.ui.common
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -9,12 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.tusjak.aifin.common.M
+import com.tusjak.aifin.navigation.NavigationItem
 import com.tusjak.aifin.navigation.Screen
 import com.tusjak.aifin.theme.statePressedAccent
 import com.tusjak.aifin.theme.surfaceAccent
@@ -30,9 +32,9 @@ fun BottomNavigationBar(navController: NavController) {
         modifier = M.clip(RoundedCornerShape(60.dp)),
         containerColor = surfaceAccent.value.withDisabledOpacity()
     ) {
-        Screen.allScreens.forEach { screen ->
+        NavigationItem.navBarScreens.forEach { screen ->
             NavigationBarItem(
-                icon = { Icon(ImageVector.vectorResource(id = screen.icon), contentDescription = screen.title) },
+                icon = { Icon(ImageVector.vectorResource(id = screen.icon), contentDescription = stringResource(screen.titleResId)) },
                 selected = currentRoute?.destination?.route == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
