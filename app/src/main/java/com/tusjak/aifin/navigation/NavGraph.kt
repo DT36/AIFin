@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.tusjak.aifin.ui.screens.AnalysisScreen
 import com.tusjak.aifin.ui.screens.HomeScreen
 import com.tusjak.aifin.ui.screens.LaunchScreen
-import com.tusjak.aifin.ui.screens.ProfileScreen
+import com.tusjak.aifin.ui.screens.TransactionsScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, modifier: Modifier) {
@@ -24,7 +24,7 @@ fun NavGraph(navController: NavHostController, modifier: Modifier) {
         }
         composable(NavigationItem.Home.route) { HomeScreen() }
         composable(NavigationItem.Analysis.route) { AnalysisScreen() }
-        composable(NavigationItem.Transactions.route) { ProfileScreen() }
-        composable(NavigationItem.Profile.route) { ProfileScreen() }
+        composable(NavigationItem.Transactions.route) { TransactionsScreen() }
+        composable(NavigationItem.Profile.route) { TransactionsScreen() }
     }
 }

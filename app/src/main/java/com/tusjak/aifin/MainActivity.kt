@@ -17,7 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tusjak.aifin.navigation.NavGraph
 import com.tusjak.aifin.navigation.Screen
 import com.tusjak.aifin.theme.AIFinTheme
-import com.tusjak.aifin.theme.surfaceBackground
+import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.ui.common.BottomNavigationBar
 
@@ -51,7 +51,7 @@ fun AIFinApp() {
     }
 
     Scaffold(
-        containerColor = surfaceBackground.value,
+        containerColor = background.value,
         contentWindowInsets = WindowInsets.safeDrawing,
         bottomBar = { if (showBottomBar) BottomNavigationBar(navController) }
     ) { paddingValues ->
