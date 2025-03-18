@@ -72,7 +72,7 @@ fun BalanceOverview() {
         ) {
             Column(horizontalAlignment = Alignment.Start) {
 
-                Row(horizontalArrangement = spacedBy4) {
+                Row(horizontalArrangement = spacedBy4, verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter = painterResource(R.drawable.income),
                         contentDescription = "Info",
@@ -102,9 +102,9 @@ fun BalanceOverview() {
 
             Column(horizontalAlignment = Alignment.End) {
 
-                Row(horizontalArrangement = spacedBy4) {
+                Row(horizontalArrangement = spacedBy4, verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(R.drawable.income),
+                        painter = painterResource(R.drawable.expense),
                         contentDescription = "Info",
                     )
 

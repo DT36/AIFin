@@ -46,10 +46,7 @@ val numericXL     = TextStyle(fontFamily = robotoFamily, fontWeight = FontWeight
 val numericL      = TextStyle(fontFamily = robotoFamily, fontWeight = FontWeight.Normal, fontSize = 28.sp, lineHeight = 28.sp, lineHeightStyle = noTrimHeightStyle)
 val numericM      = TextStyle(fontFamily = robotoFamily, fontWeight = FontWeight.Normal, fontSize = 24.sp, lineHeight = 24.sp, lineHeightStyle = noTrimHeightStyle)
 val numericS      = TextStyle(fontFamily = robotoFamily, fontWeight = FontWeight.Bold,   fontSize = 16.sp, lineHeight = 16.sp, lineHeightStyle = noTrimHeightStyle)
-val story1        = TextStyle(fontFamily = robotoFamily, fontWeight = FontWeight.Normal, fontSize = 26.sp, lineHeight = 32.sp, letterSpacing = (-0.01).sp, lineHeightStyle = noTrimHeightStyle)
-val story1Bold    = story1.copy(fontWeight = FontWeight.Bold, lineHeightStyle = noTrimHeightStyle)
-val story2        = TextStyle(fontFamily = robotoFamily, fontWeight = FontWeight.Normal, fontSize = 22.sp, lineHeight = 28.sp, letterSpacing = (-0.01).sp, lineHeightStyle = noTrimHeightStyle)
-val story2Bold    = story2.copy(fontWeight = FontWeight.Bold, lineHeightStyle = noTrimHeightStyle)
+
 
 val spacedBy2  = Arrangement.spacedBy(2.dp)
 val spacedBy4  = Arrangement.spacedBy(4.dp)
