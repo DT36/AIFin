@@ -6,6 +6,10 @@
     <string name="title_transactions">Transakcie</string>
     <string name="title_analysis">Analýza</string>
     <string name="title_notifications">Notifikácie</string>
-    <string name="login">Prihlásenie</string>
+    <string name="title_add_expenses">Pridať výdaje</string>
+    <string name="title_add_income">Pridať príjem</string>
+    <string name="login">Prihlásiť sa cez Google</string>
     <string name="sign_up">Registrácia</string>
+    <string name="log_out">Odhlásiť sa</string>
+    <string name="default_web_client_id">145093417749-f97onhm2otimecgd642d575sakl3n9gd.apps.googleusercontent.com</string>
 </resources>

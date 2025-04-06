@@ -2,6 +2,7 @@ package com.tusjak.aifin.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,18 +31,33 @@ import androidx.compose.ui.unit.sp
 import com.tusjak.aifin.R
 import com.tusjak.aifin.common.M
 import com.tusjak.aifin.theme.OceanBlue
+import com.tusjak.aifin.theme.button
 import com.tusjak.aifin.theme.fenceGreen
 import com.tusjak.aifin.theme.headline4
 import com.tusjak.aifin.theme.honeydew
 import com.tusjak.aifin.theme.spacedBy4
+import com.tusjak.aifin.ui.common.CenteredRow
 import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
 
 @Composable
-fun HomeScreen() {
-    TwoColorBackgroundScreen(offsetHeight = 250.dp,
+fun HomeScreen(onSignOutClick: () -> Unit) {
+    TwoColorBackgroundScreen(offsetHeight = 270.dp,
         contentOnGreen = {
             Column(modifier = M.padding(32.dp)) {
-                Text("Ahoj Timi", style = headline4)
+
+                CenteredRow(modifier = M.fillMaxWidth(), horizontal = Arrangement.SpaceBetween) {
+
+                    Text("Ahoj Timi", style = headline4)
+
+                    Text(
+                        modifier = M
+                            .clickable { onSignOutClick() }
+                            .padding(8.dp),
+                        text     = stringResource(R.string.log_out),
+                        style    = button
+                    )
+                }
+
                 Text("Good morning")
 
                 BalanceOverview()
@@ -48,7 +65,6 @@ fun HomeScreen() {
 
         },
         contentOnWhite = {
-
         }
     )
 }
@@ -56,7 +72,7 @@ fun HomeScreen() {
 @Composable
 @Preview
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(onSignOutClick = {  })
 }
 
 @Composable
@@ -169,7 +185,7 @@ fun CustomProgressBar(progress: Float, goalAmount: String) {
         Box(
             modifier = M
                 .fillMaxHeight()
-                .fillMaxWidth(1-progress)
+                .fillMaxWidth(1 - progress)
                 .clip(RoundedCornerShape(50.dp))
                 .background(honeydew),
             contentAlignment = Alignment.Center
@@ -180,7 +196,9 @@ fun CustomProgressBar(progress: Float, goalAmount: String) {
                 color = fenceGreen,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = M.padding(horizontal = 12.dp).align(Alignment.CenterEnd)
+                modifier = M
+                    .padding(horizontal = 12.dp)
+                    .align(Alignment.CenterEnd)
             )
         }
 

@@ -6,6 +6,10 @@
     <string name="title_transactions">Transactions</string>
     <string name="title_analysis">Analysis</string>
     <string name="title_notifications">Notifications</string>
-    <string name="login">Login</string>
+    <string name="title_add_expenses">Add Expenses</string>
+    <string name="title_add_income">Add Income</string>
+    <string name="login">Sign in with Google</string>
     <string name="sign_up">Sign Up</string>
+    <string name="log_out">Log out</string>
+    <string name="default_web_client_id">145093417749-f97onhm2otimecgd642d575sakl3n9gd.apps.googleusercontent.com</string>
 </resources>

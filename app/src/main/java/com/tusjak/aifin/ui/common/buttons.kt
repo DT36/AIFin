@@ -1,21 +1,38 @@
 package com.tusjak.aifin.ui.common
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.tusjak.aifin.R
 import com.tusjak.aifin.common.M
 import com.tusjak.aifin.common.conditional
 import com.tusjak.aifin.common.rememberLaunch
@@ -95,7 +112,8 @@ fun AfButton(
 
     CenteredRow(modifier
         .semantics { role = Role.Button }
-        .background(background, radius).border(1.dp, border, radius)
+        .background(background, radius)
+        .border(1.dp, border, radius)
         .clip(radius)
         .conditional(!isSmall) { fillMaxWidth() }
         .height(height)
@@ -106,14 +124,17 @@ fun AfButton(
         .padding(padding),
         horizontal = Arrangement.Center,
         content = {
-//            if (loading)
-//                Spinner(isOnAccent = surfaceAccent.value == background)
-//            else {
-//                if(startIcon != null)
-//                    Icon(
-//                        modifier = M.padding(end = 14.dp).size(iconSize),
-//                        icon     = startIcon,
-//                        tint     = content)
+            if (loading)
+                //Spinner(isOnAccent = surfaceAccent.value == background)
+            else {
+                if (startIcon != null)
+                    Image(
+                        modifier = M
+                            .padding(end = 14.dp)
+                            .size(iconSize),
+                        painter = painterResource(id = startIcon),
+                        contentDescription = "",
+                    )
 
                 AfText(
                     text     = text,
@@ -126,14 +147,16 @@ fun AfButton(
 //                        modifier = M.padding(start = 14.dp),
 //                        icon     = endIcon,
 //                        tint     = content)
-//            }
+            }
         })
 }
 
 @Composable
 fun AfActionButton(name: String, onClick: () -> Unit) {
     TextButton(
-        modifier       = M.padding(end = 12.dp).wrapContentHeight(),
+        modifier       = M
+            .padding(end = 12.dp)
+            .wrapContentHeight(),
         contentPadding = PaddingValues(horizontal = 4.dp, 0.dp),
         onClick        = onClick,
         content        = { Text(name, style = body2.copy(tintAction.value), maxLines = 1, overflow = TextOverflow.Ellipsis) })
@@ -154,6 +177,70 @@ fun AfToolbarTextButton(
         content        = { Text(name, style = style) }
     )
 }
+
+@Composable
+fun SpeedDialFAB(
+    onFirstActionClick: () -> Unit,
+    onSecondActionClick: () -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd
+    ) {
+        Column(
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(end = 16.dp, bottom = 16.dp)
+        ) {
+            AnimatedVisibility(visible = expanded) {
+                FloatingActionButton(
+                    onClick = {
+                        expanded = false
+                        onFirstActionClick()
+                    },
+                    containerColor = mainGreen.value,
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        modifier = M.size(24.dp),
+                        painter = painterResource(R.drawable.income),
+                        contentDescription = "Pridať transakciu"
+                    )
+                }
+            }
+
+            AnimatedVisibility(visible = expanded) {
+                FloatingActionButton(
+                    onClick = {
+                        expanded = false
+                        onSecondActionClick()
+                    },
+                    containerColor = mainGreen.value,
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        modifier = M.size(24.dp),
+                        painter = painterResource(R.drawable.expense),
+                        contentDescription = "Pridať vydaj"
+                    )
+                }
+            }
+
+            FloatingActionButton(
+                onClick = { expanded = !expanded },
+                containerColor = mainGreen.value
+            ) {
+                Icon(
+                    imageVector = if (expanded) Icons.Default.Close else Icons.Default.Add,
+                    contentDescription = "Toggle actions"
+                )
+            }
+        }
+    }
+}
+
 
 @Preview
 @Composable

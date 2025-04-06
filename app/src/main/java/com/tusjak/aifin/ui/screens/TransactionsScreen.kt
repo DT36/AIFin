@@ -2,27 +2,24 @@ package com.tusjak.aifin.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,24 +30,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tusjak.aifin.R
 import com.tusjak.aifin.common.M
+import com.tusjak.aifin.data.Transaction
 import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.body2
 import com.tusjak.aifin.theme.headline4
-import com.tusjak.aifin.theme.honeydew
 import com.tusjak.aifin.theme.mainGreen
 import com.tusjak.aifin.theme.radius4
 import com.tusjak.aifin.theme.spacedBy16
 import com.tusjak.aifin.theme.spacedBy4
-import com.tusjak.aifin.theme.spacedBy8
 import com.tusjak.aifin.theme.subtitle
 import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.ui.common.CenteredColumn
 import com.tusjak.aifin.ui.common.CenteredRow
 import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun TransactionsScreen() {
+fun TransactionsScreen(
+    transactions       : StateFlow<List<Transaction>>,
+    onAddTransaction   : (String, Double, String, String) -> Unit,
+    onDeleteTransaction: (String) -> Unit,
+    onTransactionClick : (String) -> Unit
+) {
     TwoColorBackgroundScreen(offsetHeight = 300.dp,
         contentOnGreen = {
             Column(modifier = M.padding(32.dp), verticalArrangement = spacedBy16) {
@@ -67,7 +69,8 @@ fun TransactionsScreen() {
                             text = "$7,783.00",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            color = textColor.value
+                            color = textColor.value,
+                            modifier = M.clickable { onAddTransaction("test", 0.1, "Test", "Test") }
                         )
                     }
                 }
@@ -115,7 +118,9 @@ fun TransactionsScreen() {
             }
         },
         contentOnWhite = {
-            TransactionList()
+            val transactionList by transactions.collectAsState()
+
+            TransactionList(transactionList, onDeleteTransaction)
         }
     )
 }
@@ -123,42 +128,32 @@ fun TransactionsScreen() {
 @Composable
 @Preview
 fun TransactionsScreenPreview() {
-    TransactionsScreen()
+    //TransactionsScreen()
 }
 
 @Composable
 @Preview
 fun TransactionItemPreview() {
-    TransactionItem()
+    //TransactionItem()
 }
 
 @Composable
-private fun TransactionList() {
+private fun TransactionList(transactions: List<Transaction>, onDeleteTransaction: (String) -> Unit) {
     LazyColumn(M.fillMaxWidth(), contentPadding = PaddingValues(16.dp)) {
-        item { MonthItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
-        item { MonthItem() }
-        item { TransactionItem() }
-        item { MonthItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
-        item { TransactionItem() }
+        items(transactions) { transaction ->
+            TransactionItem(transaction, onDeleteTransaction)
+        }
     }
 }
 
 @Composable
-private fun TransactionItem() {
+private fun TransactionItem(transaction: Transaction, onDeleteTransaction: (String) -> Unit) {
     CenteredRow(
         M
             .padding(horizontal = 16.dp, vertical = 8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable { onDeleteTransaction(transaction.id) },
+
         horizontal = spacedBy4
     ) {
 
@@ -170,7 +165,7 @@ private fun TransactionItem() {
         CenteredColumn(modifier = M.width(100.dp)) {
 
             Text(
-                text = "Salary",
+                text = transaction.title,
                 color = textColor.value,
                 textAlign = TextAlign.Center,
                 style = body2
@@ -198,7 +193,7 @@ private fun TransactionItem() {
 
         Text(
             modifier = M.fillMaxWidth(),
-            text = "$7,783.00",
+            text = transaction.amount.toString(),
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
