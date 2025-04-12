@@ -9,6 +9,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -31,14 +32,14 @@ fun BottomNavigationBar(navController: NavController) {
     val currentRoute by navController.currentBackStackEntryAsState()
 
     NavigationBar(
-        modifier = M.background(background.value).clip(RoundedCornerShape(60.dp)),
+        modifier       = M.clip(RoundedCornerShape(60.dp)),
         containerColor = surfaceAccent.value.withDisabledOpacity()
     ) {
         NavigationItem.navBarScreens.forEach { screen ->
             NavigationBarItem(
-                icon = { Icon(ImageVector.vectorResource(id = screen.icon), contentDescription = stringResource(screen.titleResId)) },
+                icon     = { Icon(ImageVector.vectorResource(id = screen.icon), contentDescription = stringResource(screen.titleResId)) },
                 selected = currentRoute?.destination?.route == screen.route,
-                onClick = {
+                onClick  = {
                     navController.navigate(screen.route) {
                         popUpTo(navController.graph.findStartDestination().id) { saveState = true }
                         launchSingleTop = true
@@ -46,9 +47,9 @@ fun BottomNavigationBar(navController: NavController) {
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = surfaceInverted.value,
+                    selectedIconColor   = surfaceInverted.value,
                     unselectedIconColor = surfaceInverted.value,
-                    indicatorColor = statePressedAccent.value)
+                    indicatorColor      = statePressedAccent.value)
             )
         }
     }

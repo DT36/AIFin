@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tusjak.aifin.R
 import com.tusjak.aifin.common.M
-import com.tusjak.aifin.theme.OceanBlue
+import com.tusjak.aifin.theme.oceanBlue
 import com.tusjak.aifin.theme.button
 import com.tusjak.aifin.theme.fenceGreen
 import com.tusjak.aifin.theme.headline4
@@ -41,7 +41,7 @@ import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
 
 @Composable
 fun HomeScreen(onSignOutClick: () -> Unit) {
-    TwoColorBackgroundScreen(offsetHeight = 270.dp,
+    TwoColorBackgroundScreen(
         contentOnGreen = {
             Column(modifier = M.padding(32.dp)) {
 
@@ -54,6 +54,7 @@ fun HomeScreen(onSignOutClick: () -> Unit) {
                             .clickable { onSignOutClick() }
                             .padding(8.dp),
                         text     = stringResource(R.string.log_out),
+                        color    = oceanBlue,
                         style    = button
                     )
                 }
@@ -132,10 +133,10 @@ fun BalanceOverview() {
                 }
 
                 Text(
-                    text = "-\$1,187.40",
-                    fontSize = 20.sp,
+                    text       = "-\$1,187.40",
+                    fontSize   = 20.sp,
                     fontWeight = FontWeight.Bold,
-                    color = OceanBlue
+                    color      = oceanBlue
                 )
             }
         }

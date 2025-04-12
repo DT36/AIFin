@@ -12,4 +12,15 @@
     <string name="sign_up">Sign Up</string>
     <string name="log_out">Log out</string>
     <string name="default_web_client_id">145093417749-f97onhm2otimecgd642d575sakl3n9gd.apps.googleusercontent.com</string>
+    <string name="amount">Amount</string>
+    <string name="title">Title</string>
+    <string name="date">Date</string>
+    <string name="category">Category</string>
+    <string name="save">Save</string>
+    <string name="description">Description</string>
+    <string name="select_date">Select date</string>
+    <string name="total_balance">Total Balance</string>
+    <string name="income">Income</string>
+    <string name="expenses">Expenses</string>
+    <string name="expense">Expense</string>
 </resources>

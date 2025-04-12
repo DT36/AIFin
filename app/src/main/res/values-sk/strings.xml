@@ -10,6 +10,17 @@
     <string name="title_add_income">Pridať príjem</string>
     <string name="login">Prihlásiť sa cez Google</string>
     <string name="sign_up">Registrácia</string>
-    <string name="log_out">Odhlásiť sa</string>
+    <string name="log_out">Odhlásiť</string>
     <string name="default_web_client_id">145093417749-f97onhm2otimecgd642d575sakl3n9gd.apps.googleusercontent.com</string>
+    <string name="amount">Suma</string>
+    <string name="title">Názov</string>
+    <string name="date">Dátum</string>
+    <string name="category">Kategória</string>
+    <string name="save">Uložiť</string>
+    <string name="description">Popis</string>
+    <string name="select_date">Vyber dátum</string>
+    <string name="total_balance">Celkový Zostatok</string>
+    <string name="income">Príjem</string>
+    <string name="expenses">Výdaje</string>
+    <string name="expense">Výdaj</string>
 </resources>

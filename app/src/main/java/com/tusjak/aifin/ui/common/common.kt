@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tusjak.aifin.common.M
 import com.tusjak.aifin.theme.background
-import com.tusjak.aifin.theme.lightGreen
 import com.tusjak.aifin.theme.mainGreen
 import com.tusjak.aifin.theme.value
 
@@ -43,25 +42,25 @@ inline fun CenteredBox(
     content  : @Composable BoxScope.() -> Unit) = Box(modifier, Alignment.Center, content = content)
 
 @Composable
-fun TwoColorBackgroundScreen(offsetHeight: Dp = 200.dp, contentOnGreen: @Composable BoxScope.() -> Unit, contentOnWhite: @Composable BoxScope.() -> Unit) {
-    Box(
-        modifier = M.fillMaxSize()
+fun TwoColorBackgroundScreen(
+    contentOnGreen: @Composable BoxScope.() -> Unit,
+    contentOnWhite: @Composable BoxScope.() -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(mainGreen.value)
     ) {
-        // Green top background
         Box(
-            modifier = M
-                .fillMaxSize()
-                .background(mainGreen.value)
-        ){
+            modifier = Modifier.fillMaxWidth()
+        ) {
             contentOnGreen()
         }
 
-        // White rounded bottom background
         Box(
-            modifier = M
+            modifier = Modifier
                 .fillMaxSize()
-                .offset(y = offsetHeight)
-                .clip(RoundedCornerShape(60.dp))
+                .clip(RoundedCornerShape(topStart = 60.dp, topEnd = 60.dp))
                 .background(background.value)
         ) {
             contentOnWhite()

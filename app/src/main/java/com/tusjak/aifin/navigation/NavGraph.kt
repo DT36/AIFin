@@ -37,9 +37,6 @@ fun NavGraph(
         composable(NavigationItem.Transactions.route) {
             TransactionsScreen(
                 transactions     = transactionViewModel.transactions,
-                onAddTransaction = { title, amount, category, type ->
-                    transactionViewModel.addTransaction(title, amount, category, type)
-                },
                 onTransactionClick = { transactionId ->
                     navController.navigate("transactionDetail/$transactionId")
                 },
@@ -49,8 +46,18 @@ fun NavGraph(
             )
         }
         composable(NavigationItem.Profile.route) {}
-        composable(NavigationItem.AddExpenses.route) { AddExpensesScreen() }
-        composable(NavigationItem.AddIncome.route) { AddIncomeScreen() }
+        composable(NavigationItem.AddExpenses.route) { AddExpensesScreen(
+            onAddExpense = { title, amount, date, category, description, type ->
+                transactionViewModel.addTransaction(title, amount, date, category, description, type)
+                navController.popBackStack()
+            },
+        ) }
+        composable(NavigationItem.AddIncome.route) { AddIncomeScreen(
+            onAddIncome = { title, amount, date, category, description, type ->
+                transactionViewModel.addTransaction(title, amount, date, category, description, type)
+                navController.popBackStack()
+            },
+        ) }
     }
 
     // Dynamická kontrola stavu autentifikácie a aktualizácia ViewModelu

@@ -6,9 +6,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.tusjak.aifin.data.Transaction
+import com.tusjak.aifin.data.TransactionType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class TransactionViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
@@ -40,13 +42,18 @@ class TransactionViewModel : ViewModel() {
                     snapshot?.let {
                         val transactionList = it.documents.map { doc ->
                             Transaction(
-                                id       = doc.id,
-                                title    = doc.getString("title") ?: "",
-                                amount   = doc.getDouble("amount") ?: 0.0,
-                                date     = doc.getDate("date") ?: java.util.Date(),
-                                category = doc.getString("category") ?: "",
-                                type     = doc.getString("type") ?: "expense",
-                                userId   = doc.getString("userId") ?: ""
+                                id          = doc.id,
+                                title       = doc.getString("title") ?: "",
+                                amount      = doc.getDouble("amount") ?: 0.0,
+                                date        = doc.getDate("date") ?: Date(),
+                                description = doc.getString("description") ?: "",
+                                category    = doc.getString("category") ?: "",
+                                type        = try {
+                                    TransactionType.valueOf(doc.getString("type") ?: "EXPENSE")
+                                } catch (e: IllegalArgumentException) {
+                                    TransactionType.EXPENSE
+                                },
+                                userId      = doc.getString("userId") ?: ""
                             )
                         }
 
@@ -60,16 +67,17 @@ class TransactionViewModel : ViewModel() {
         }
     }
 
-    fun addTransaction(title: String, amount: Double, category: String, type: String) {
+    fun addTransaction(title: String, amount: Double, date: Date, category: String, description: String, type: TransactionType) {
         auth.currentUser?.let { user ->
             println("Adding transaction for user: ${user.uid}")
             val transaction = hashMapOf(
-                "title"    to title,
-                "amount"   to amount,
-                "date"     to java.util.Date(),
-                "category" to category,
-                "type"     to type,
-                "userId"   to user.uid
+                "title"       to title,
+                "amount"      to amount,
+                "date"        to date,
+                "description" to description,
+                "category"    to category,
+                "type"        to type.name,
+                "userId"      to user.uid
             )
             viewModelScope.launch {
                 db.collection("transactions").add(transaction)
