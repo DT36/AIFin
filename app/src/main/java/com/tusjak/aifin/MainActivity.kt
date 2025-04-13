@@ -154,16 +154,19 @@ fun AIFinApp(
 
     val showTopBar by remember(currentRoute) {
         derivedStateOf {
-            currentRoute in listOf(
-                Screen.ADD_EXPENSES.name,
-                Screen.ADD_INCOME.name
-            )
+            when (currentRoute?.substringBefore("/{") ?: currentRoute) {
+                Screen.ADD_EXPENSES.name -> true
+                Screen.ADD_INCOME.name   -> true
+                Screen.DETAIL.name       -> true
+                else                     -> false
+            }
         }
     }
 
-    val topBarTitle = when (currentRoute) {
+    val topBarTitle = when (currentRoute?.substringBefore("/{") ?: currentRoute) {
         Screen.ADD_EXPENSES.name -> stringResource(R.string.title_add_expenses)
         Screen.ADD_INCOME.name   -> stringResource(R.string.title_add_income)
+        Screen.DETAIL.name       -> stringResource(R.string.transaction_detail)
         else                     -> ""
     }
 

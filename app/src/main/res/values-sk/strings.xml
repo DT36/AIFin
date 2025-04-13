@@ -30,10 +30,13 @@
     <string name="last_transactions">Posledné Transakcie</string>
     <string name="set_goal">Nastaviť cieľ</string>
     <string name="total_expense">Celkové Výdaje</string>
-    <string name="goal_message">%d%% Z cieľa, vyzerá to dobre.</string>
+    <string name="goal_message">%d%% z cieľa, vyzerá to dobre.</string>
     <string name="valid_number">Zadajte platné číslo</string>
     <string name="app_description">Sleduj výdavky, plánuj rozpočet a objav odporúčania na mieru – s pomocou AI.</string>
     <string name="from">Od</string>
     <string name="to">Do</string>
     <string name="pick_dates">Vybrať dátumy</string>
+    <string name="transaction_detail">Detail Transakcie</string>
+    <string name="type">Typ</string>
+    <string name="delete">Odstrániť</string>
 </resources>

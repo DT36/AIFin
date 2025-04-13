@@ -1,17 +1,14 @@
 package com.tusjak.aifin.navigation
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.google.firebase.auth.FirebaseAuth
 import com.tusjak.aifin.ui.viewModels.TransactionViewModel
 import com.tusjak.aifin.ui.screens.AddExpensesScreen
@@ -19,6 +16,7 @@ import com.tusjak.aifin.ui.screens.AddIncomeScreen
 import com.tusjak.aifin.ui.screens.AnalysisScreen
 import com.tusjak.aifin.ui.screens.HomeScreen
 import com.tusjak.aifin.ui.screens.LaunchScreen
+import com.tusjak.aifin.ui.screens.TransactionDetailScreen
 import com.tusjak.aifin.ui.screens.TransactionsScreen
 
 @Composable
@@ -37,17 +35,22 @@ fun NavGraph(
         modifier         = modifier
     ) {
         composable(NavigationItem.LaunchMenu.route) { LaunchScreen(onLoginButtonClicked = { onGoogleSignInClick() }) }
-        composable(NavigationItem.Home.route) { HomeScreen(transactions = transactionViewModel.transactions, onSignOutClick = onSignOutClick) }
+        composable(NavigationItem.Home.route) {
+            HomeScreen(
+                transactions       = transactionViewModel.transactions,
+                onSignOutClick     = onSignOutClick,
+                onTransactionClick = { transactionId ->
+                    navController.navigate(NavigationItem.TransactionDetail.createRoute(transactionId))
+                },
+            )
+        }
         composable(NavigationItem.Analysis.route) { AnalysisScreen() }
         composable(NavigationItem.Transactions.route) {
             TransactionsScreen(
-                transactions     = transactionViewModel.transactions,
+                transactions       = transactionViewModel.transactions,
                 onTransactionClick = { transactionId ->
-                    navController.navigate("transactionDetail/$transactionId")
+                    navController.navigate(NavigationItem.TransactionDetail.createRoute(transactionId))
                 },
-                onDeleteTransaction = { transactionId ->
-                    transactionViewModel.deleteTransaction(transactionId)
-                }
             )
         }
         composable(NavigationItem.Profile.route) {}
@@ -63,6 +66,26 @@ fun NavGraph(
                 navController.popBackStack()
             },
         ) }
+        composable(
+            route = NavigationItem.TransactionDetail.route,
+            arguments = listOf(navArgument("transactionId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val transactionId = backStackEntry.arguments?.getString("transactionId")
+            val transaction = transactionId?.let { transactionViewModel.getTransactionById(it) }
+
+            TransactionDetailScreen(
+                transaction         = transaction,
+                onEdit              = { id, title, amount, date, category, description, type ->
+                    transactionViewModel.deleteTransaction(id)
+                    transactionViewModel.addTransaction(title, amount, date, category, description, type)
+                    navController.popBackStack()
+                },
+                onDeleteTransaction = {
+                    transactionViewModel.deleteTransaction(it)
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 
     // Dynamická kontrola stavu autentifikácie a aktualizácia ViewModelu

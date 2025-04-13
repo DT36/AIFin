@@ -68,9 +68,14 @@ import com.tusjak.aifin.ui.common.AfTextField
 import com.tusjak.aifin.ui.common.CenteredRow
 import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
 import kotlinx.coroutines.flow.StateFlow
+import ui.common.AfText
 
 @Composable
-fun HomeScreen(transactions: StateFlow<List<Transaction>>, onSignOutClick: () -> Unit) {
+fun HomeScreen(
+    transactions      : StateFlow<List<Transaction>>,
+    onSignOutClick    : () -> Unit,
+    onTransactionClick: (String) -> Unit
+) {
     val transactionList by transactions.collectAsState()
     val incomeSum  = transactionList.filter { it.type == TransactionType.INCOME }.sumOf { it.amount }
     val expenseSum = transactionList.filter { it.type == TransactionType.EXPENSE }.sumOf { it.amount }
@@ -87,7 +92,7 @@ fun HomeScreen(transactions: StateFlow<List<Transaction>>, onSignOutClick: () ->
                     Text(
                         modifier = M
                             .clickable { onSignOutClick() }
-                            .padding(8.dp),
+                            .padding(vertical = 8.dp),
                         text     = stringResource(R.string.log_out),
                         color    = oceanBlue,
                         style    = button
@@ -99,7 +104,7 @@ fun HomeScreen(transactions: StateFlow<List<Transaction>>, onSignOutClick: () ->
 
         },
         contentOnWhite = {
-            LastTransactionsList(transactionList)
+            LastTransactionsList(transactionList, onTransactionClick)
         }
     )
 }
@@ -277,7 +282,8 @@ fun CustomProgressBar(progress: Float, goalAmount: String, onGoalCLick : () -> U
 
 @Composable
 private fun LastTransactionsList(
-    transactions: List<Transaction>,
+    transactions      : List<Transaction>,
+    onTransactionClick: (String) -> Unit
 ) {
 
     LazyColumn(contentPadding = PaddingValues(top = 16.dp, bottom = 100.dp)) {
@@ -292,8 +298,10 @@ private fun LastTransactionsList(
             )
         }
 
-        items(transactions.take(5)) { transaction ->
-            TransactionItem(transaction) {}
+        items(transactions.take(5).sortedByDescending { it.date }) { transaction ->
+            TransactionItem(transaction) {
+                onTransactionClick(transaction.id)
+            }
         }
     }
 }
@@ -309,9 +317,17 @@ private fun SetGoalDialog(showDialog: MutableState<Boolean>, sharedPrefs: Shared
 
     AlertDialog(
         onDismissRequest = { showDialog.value = false },
+        title = {
+            AfText(
+                text     = RS.set_goal.string(),
+                maxLines = 1,
+                color    = textColor.value,
+                style    = body2Bold
+            )
+        },
         containerColor = background.value,
         text = {
-            AfTextField(label = RS.set_goal.string(), value = goalInput, keyboardType = KeyboardType.Number)
+            AfTextField(label = "", value = goalInput, keyboardType = KeyboardType.Number)
         },
         confirmButton = {
             TextButton(

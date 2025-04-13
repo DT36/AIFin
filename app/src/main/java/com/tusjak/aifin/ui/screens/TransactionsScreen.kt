@@ -70,7 +70,6 @@ import java.util.Locale
 @Composable
 fun TransactionsScreen(
     transactions: StateFlow<List<Transaction>>,
-    onDeleteTransaction: (String) -> Unit,
     onTransactionClick: (String) -> Unit
 ) {
     val transactionList by transactions.collectAsState()
@@ -180,7 +179,7 @@ fun TransactionsScreen(
                 )
             }
 
-            TransactionList(filteredTransactions, onDeleteTransaction)
+            TransactionList(filteredTransactions, onTransactionClick)
         }
     )
 }
@@ -188,7 +187,7 @@ fun TransactionsScreen(
 @Composable
 private fun TransactionList(
     transactions: List<Transaction>,
-    onDeleteTransaction: (String) -> Unit
+    onTransactionClick: (String) -> Unit
 ) {
     val groupedTransactions = transactions
         .groupBy {
@@ -211,19 +210,19 @@ private fun TransactionList(
             }
 
             items(transactionsInMonth) { transaction ->
-                TransactionItem(transaction, onDeleteTransaction)
+                TransactionItem(transaction, onTransactionClick)
             }
         }
     }
 }
 
 @Composable
-fun TransactionItem(transaction: Transaction, onDeleteTransaction: (String) -> Unit) {
+fun TransactionItem(transaction: Transaction, onTransactionClick: (String) -> Unit) {
     CenteredRow(
         M
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .fillMaxWidth()
-            .clickable { onDeleteTransaction(transaction.id) },
+            .clickable { onTransactionClick(transaction.id) },
 
         horizontal = spacedBy4
     ) {

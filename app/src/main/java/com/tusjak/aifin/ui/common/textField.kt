@@ -29,7 +29,7 @@ import com.tusjak.aifin.theme.value
 import ui.common.AfText
 
 @Composable
-fun AfTextField(label: String, value: MutableState<TextFieldValue>, keyboardType: KeyboardType = KeyboardType.Text, amountValue: Boolean = false) {
+fun AfTextField(label: String, value: MutableState<TextFieldValue>, keyboardType: KeyboardType = KeyboardType.Text, amountValue: Boolean = false, enabled: Boolean = true) {
 
     Column(
         modifier = M
@@ -53,6 +53,7 @@ fun AfTextField(label: String, value: MutableState<TextFieldValue>, keyboardType
                     color = lightGreen,
                     shape = radius5
                 ),
+            enabled      = enabled,
             trailingIcon = {
                 AfText(
                     modifier = M.padding(end = 8.dp),
@@ -70,6 +71,7 @@ fun AfTextField(label: String, value: MutableState<TextFieldValue>, keyboardType
                 unfocusedBorderColor = Color.Transparent,
                 focusedLabelColor    = Color.Black,
                 unfocusedLabelColor  = Color.Gray,
+                disabledBorderColor  = Color.Transparent,
             ),
             textStyle = body1
         )
