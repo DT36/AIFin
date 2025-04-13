@@ -48,6 +48,7 @@ import com.tusjak.aifin.navigation.Screen
 import com.tusjak.aifin.theme.AIFinTheme
 import com.tusjak.aifin.theme.headline4
 import com.tusjak.aifin.theme.mainGreen
+import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.ui.common.BottomNavigationBar
 import com.tusjak.aifin.ui.common.SpeedDialFAB
@@ -180,13 +181,14 @@ fun AIFinApp(
                 ) + fadeOut()
             ) {
                 CenterAlignedTopAppBar(
-                    title          = { Text(topBarTitle, style = headline4) },
+                    title          = { Text(topBarTitle, color = textColor.value, style = headline4) },
                     navigationIcon = {
                         IconButton(onClick = {
                             navController.popBackStack()
                         }) {
                             Icon(
                                 Icons.AutoMirrored.Filled.ArrowBack,
+                                tint = textColor.value,
                                 contentDescription = "Back"
                             )
                         }

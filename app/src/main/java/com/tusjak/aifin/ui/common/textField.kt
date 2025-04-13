@@ -24,6 +24,8 @@ import com.tusjak.aifin.theme.body1Bold
 import com.tusjak.aifin.theme.body2Bold
 import com.tusjak.aifin.theme.lightGreen
 import com.tusjak.aifin.theme.radius5
+import com.tusjak.aifin.theme.textColor
+import com.tusjak.aifin.theme.value
 import ui.common.AfText
 
 @Composable
@@ -38,6 +40,7 @@ fun AfTextField(label: String, value: MutableState<TextFieldValue>, keyboardType
         AfText(
             text     = label,
             maxLines = 1,
+            color    = textColor.value,
             style    = body2Bold
         )
 

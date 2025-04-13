@@ -6,11 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -27,19 +24,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.tusjak.aifin.R
 import com.tusjak.aifin.common.M
+import com.tusjak.aifin.common.RS
 import com.tusjak.aifin.common.conditional
 import com.tusjak.aifin.common.rememberLaunch
+import com.tusjak.aifin.common.string
 import com.tusjak.aifin.theme.GLOBAL_OPACITY
 import com.tusjak.aifin.theme.Palette
 import com.tusjak.aifin.theme.body2
 import com.tusjak.aifin.theme.button
+import com.tusjak.aifin.theme.caribbeanGreen
+import com.tusjak.aifin.theme.caribbeanGreenP
 import com.tusjak.aifin.theme.mainGreen
 import com.tusjak.aifin.theme.radius2
 import com.tusjak.aifin.theme.radius3
@@ -63,7 +63,7 @@ import kotlinx.coroutines.delay
 import ui.common.AfText
 
 data class ButtonStyle(val background: Palette, val content: Palette, val border: Palette, val disabled: Palette)
-val buttonContained = ButtonStyle(mainGreen, tintOnAccent, mainGreen, stateDisabled)
+val buttonContained = ButtonStyle(caribbeanGreenP, tintOnAccent, mainGreen, stateDisabled)
 val buttonOutlined  = ButtonStyle(secondaryGreen,   tintPrimary,  secondaryGreen,    stateDisabled)
 val buttonText      = ButtonStyle(transparent,   tintAccent,   transparent, transparent)
 val buttonDanger    = ButtonStyle(transparent,   solidDanger,  utilityBorderRegularPrimary,  stateDisabled)
@@ -200,13 +200,13 @@ fun SpeedDialFAB(
                         expanded = false
                         onFirstActionClick()
                     },
-                    containerColor = mainGreen.value,
+                    containerColor = caribbeanGreen,
                     modifier = Modifier.size(48.dp)
                 ) {
                     Icon(
                         modifier = M.size(24.dp),
                         painter = painterResource(R.drawable.income),
-                        contentDescription = "Pridať transakciu"
+                        contentDescription = RS.title_add_income.string()
                     )
                 }
             }
@@ -217,20 +217,20 @@ fun SpeedDialFAB(
                         expanded = false
                         onSecondActionClick()
                     },
-                    containerColor = mainGreen.value,
+                    containerColor = caribbeanGreen,
                     modifier = Modifier.size(48.dp)
                 ) {
                     Icon(
                         modifier = M.size(24.dp),
                         painter = painterResource(R.drawable.expense),
-                        contentDescription = "Pridať vydaj"
+                        contentDescription = RS.title_add_expenses.string()
                     )
                 }
             }
 
             FloatingActionButton(
                 onClick = { expanded = !expanded },
-                containerColor = mainGreen.value
+                containerColor = caribbeanGreen
             ) {
                 Icon(
                     imageVector = if (expanded) Icons.Default.Close else Icons.Default.Add,

@@ -47,6 +47,7 @@ import com.tusjak.aifin.data.TransactionType
 import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.body2
 import com.tusjak.aifin.theme.body2Bold
+import com.tusjak.aifin.theme.caribbeanGreen
 import com.tusjak.aifin.theme.headline4
 import com.tusjak.aifin.theme.mainGreen
 import com.tusjak.aifin.theme.oceanBlue
@@ -89,7 +90,7 @@ fun TransactionsScreen(
     TwoColorBackgroundScreen(
         contentOnGreen = {
             Column(modifier = M.padding(32.dp), verticalArrangement = spacedBy16) {
-                Text(RS.title_transactions.string(), style = headline4)
+                Text(RS.title_transactions.string(), color = textColor.value, style = headline4)
 
                 CenteredRow(
                     M
@@ -121,7 +122,7 @@ fun TransactionsScreen(
                         Image(
                             modifier = M.size(20.dp),
                             painter = painterResource(R.drawable.income),
-                            colorFilter = ColorFilter.tint(mainGreen.value),
+                            colorFilter = ColorFilter.tint(caribbeanGreen),
                             contentDescription = RS.income.string(),
                         )
                         Text(RS.income.string(), color = textColor.value, style = body2)

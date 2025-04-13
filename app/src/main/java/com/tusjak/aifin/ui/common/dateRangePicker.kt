@@ -18,13 +18,11 @@ import com.tusjak.aifin.common.string
 import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.button
 import com.tusjak.aifin.theme.lightBlue
-import com.tusjak.aifin.theme.oceanBlue
 import com.tusjak.aifin.theme.stateDisabled
 import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.theme.vividBlue
 import kotlinx.coroutines.launch
-import java.time.format.TextStyle
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +57,7 @@ fun ShowDateRangePickerDialog(
                         onDismiss()
                     }
                 }) {
-                    Icon(Icons.Filled.Close, contentDescription = RS.close.string())
+                    Icon(Icons.Filled.Close, tint = textColor.value, contentDescription = RS.close.string())
                 }
                 TextButton(
                     onClick = {
@@ -93,7 +91,8 @@ fun ShowDateRangePickerDialog(
                 modifier = M.weight(1f),
                 title = {
                     Text(
-                        text = RS.pick_dates.string(),
+                        text     = RS.pick_dates.string(),
+                        color    = textColor.value,
                         modifier = M.padding(horizontal = 32.dp),
                     )
                 },
@@ -106,18 +105,26 @@ fun ShowDateRangePickerDialog(
                     } ?: RS.to.string()
 
                     Text(
-                        text = "$startDateText - $endDateText",
+                        text     = "$startDateText - $endDateText",
+                        color    = textColor.value,
                         modifier = M.padding(horizontal = 32.dp),
                     )
                 },
                 colors   = DatePickerDefaults.colors(
                     containerColor                    = background.value,
-                    selectedDayContentColor           = oceanBlue,
                     selectedDayContainerColor         = vividBlue,
                     dayInSelectionRangeContentColor   = vividBlue,
                     dayInSelectionRangeContainerColor = lightBlue,
+                    headlineContentColor              = textColor.value,
+                    weekdayContentColor               = textColor.value,
+                    subheadContentColor               = textColor.value,
                     dividerColor                      = lightBlue,
-                    todayDateBorderColor              = lightBlue
+                    todayDateBorderColor              = lightBlue,
+                    todayContentColor                 = textColor.value,
+                    dayContentColor                   = textColor.value,
+                    dateTextFieldColors               = TextFieldDefaults.colors(
+                        focusedLabelColor = textColor.value,
+                    )
                 )
             )
         }

@@ -15,12 +15,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.tusjak.aifin.common.M
 import com.tusjak.aifin.navigation.NavigationItem
-import com.tusjak.aifin.theme.statePressedAccent
-import com.tusjak.aifin.theme.surfaceAccent
+import com.tusjak.aifin.theme.caribbeanGreen
+import com.tusjak.aifin.theme.greenBar
 import com.tusjak.aifin.theme.surfaceInverted
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.theme.withDisabledOpacity
@@ -31,7 +30,7 @@ fun BottomNavigationBar(navController: NavController) {
 
     NavigationBar(
         modifier       = M.background(Color.Transparent).clip(RoundedCornerShape(topStart = 45.dp, topEnd = 45.dp)),
-        containerColor = surfaceAccent.value.withDisabledOpacity()
+        containerColor = greenBar.value.withDisabledOpacity()
     ) {
         NavigationItem.navBarScreens.forEach { screen ->
             NavigationBarItem(
@@ -46,7 +45,7 @@ fun BottomNavigationBar(navController: NavController) {
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor   = surfaceInverted.value,
                     unselectedIconColor = surfaceInverted.value,
-                    indicatorColor      = statePressedAccent.value)
+                    indicatorColor      = caribbeanGreen)
             )
         }
     }

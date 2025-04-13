@@ -29,6 +29,8 @@ import com.tusjak.aifin.theme.body1
 import com.tusjak.aifin.theme.body2Bold
 import com.tusjak.aifin.theme.lightGreen
 import com.tusjak.aifin.theme.radius5
+import com.tusjak.aifin.theme.textColor
+import com.tusjak.aifin.theme.value
 import ui.common.AfText
 import java.util.Calendar
 import java.util.Date
@@ -49,6 +51,7 @@ fun AfDatePicker(onDateSelected: (Date) -> Unit) {
         AfText(
             text = RS.date.string(),
             maxLines = 1,
+            color = textColor.value,
             style = body2Bold
         )
 

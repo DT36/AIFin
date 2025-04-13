@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,13 +57,13 @@ import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.body2Bold
 import com.tusjak.aifin.theme.oceanBlue
 import com.tusjak.aifin.theme.button
-import com.tusjak.aifin.theme.fenceGreen
+import com.tusjak.aifin.theme.caribbeanGreen
 import com.tusjak.aifin.theme.headline4
 import com.tusjak.aifin.theme.honeydew
-import com.tusjak.aifin.theme.mainGreen
 import com.tusjak.aifin.theme.spacedBy4
 import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
+import com.tusjak.aifin.theme.void
 import com.tusjak.aifin.ui.common.AfTextField
 import com.tusjak.aifin.ui.common.CenteredRow
 import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
@@ -81,7 +82,7 @@ fun HomeScreen(transactions: StateFlow<List<Transaction>>, onSignOutClick: () ->
 
                 CenteredRow(modifier = M.fillMaxWidth(), horizontal = Arrangement.SpaceBetween) {
 
-                    Text(getGreetingByTime(), style = headline4)
+                    Text(getGreetingByTime(), color = textColor.value, style = headline4)
 
                     Text(
                         modifier = M
@@ -127,7 +128,8 @@ fun BalanceOverview(total: Double, expenses: Double) {
 
                 Row(horizontalArrangement = spacedBy4, verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(R.drawable.income),
+                        painter            = painterResource(R.drawable.income),
+                        colorFilter        = ColorFilter.tint(textColor.value),
                         contentDescription = RS.total_balance.string(),
                     )
 
@@ -157,7 +159,8 @@ fun BalanceOverview(total: Double, expenses: Double) {
 
                 Row(horizontalArrangement = spacedBy4, verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(R.drawable.expense),
+                        painter            = painterResource(R.drawable.expense),
+                        colorFilter        = ColorFilter.tint(textColor.value),
                         contentDescription = RS.total_expense.string(),
                     )
 
@@ -205,14 +208,15 @@ fun BalanceOverview(total: Double, expenses: Double) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(R.drawable.check),
+                    painter            = painterResource(R.drawable.check),
+                    colorFilter        = ColorFilter.tint(textColor.value),
                     contentDescription = "",
                 )
 
                 Text(
                     text = stringResource(id = R.string.goal_message, ((total / goal)*100).toInt()),
                     fontSize = 14.sp,
-                    color = Color.Black
+                    color = textColor.value
                 )
             }
         } else {
@@ -235,7 +239,7 @@ fun CustomProgressBar(progress: Float, goalAmount: String, onGoalCLick : () -> U
             .fillMaxWidth()
             .height(28.dp)
             .clip(RoundedCornerShape(50))
-            .background(fenceGreen),
+            .background(void),
         contentAlignment = Alignment.CenterEnd
     ) {
         Box(
@@ -251,7 +255,7 @@ fun CustomProgressBar(progress: Float, goalAmount: String, onGoalCLick : () -> U
             fontSize   = 14.sp,
             fontStyle  = FontStyle.Italic,
             fontWeight = FontWeight.Bold,
-            color      = mainGreen.value,
+            color      = caribbeanGreen,
             modifier   = M
                 .align(Alignment.CenterStart)
                 .padding(start = 12.dp)
@@ -326,12 +330,12 @@ private fun SetGoalDialog(showDialog: MutableState<Boolean>, sharedPrefs: Shared
                     }
                 }
             ) {
-                Text(text = RS.save.string(), color = oceanBlue)
+                Text(text = RS.save.string(), color = oceanBlue, style = button)
             }
         },
         dismissButton = {
             TextButton(onClick = { showDialog.value = false }) {
-                Text(text = RS.close.string(), color = oceanBlue)
+                Text(text = RS.close.string(), color = oceanBlue, style = button)
             }
         }
     )

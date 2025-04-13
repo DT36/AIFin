@@ -8,6 +8,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tusjak.aifin.common.M
 import com.tusjak.aifin.theme.headline4
+import com.tusjak.aifin.theme.textColor
+import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
 
 @Composable
@@ -15,7 +17,7 @@ fun AnalysisScreen() {
     TwoColorBackgroundScreen(
         contentOnGreen = {
             Column(modifier = M.padding(32.dp)) {
-                Text("Analytics", style = headline4)
+                Text("Analytics", color = textColor.value, style = headline4)
             }
 
         },

@@ -24,8 +24,8 @@ import com.tusjak.aifin.common.string
 import com.tusjak.aifin.theme.AIFinTheme
 import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.body1
+import com.tusjak.aifin.theme.caribbeanGreenP
 import com.tusjak.aifin.theme.headline1
-import com.tusjak.aifin.theme.mainGreen
 import com.tusjak.aifin.theme.switchTheme
 import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
@@ -43,7 +43,7 @@ fun LaunchScreen(onLoginButtonClicked: () -> Unit) {
         Image(
             modifier           = M.padding(bottom = 8.dp),
             painter            = painterResource(id = R.drawable.logo_graph),
-            colorFilter        = ColorFilter.tint(mainGreen.value),
+            colorFilter        = ColorFilter.tint(caribbeanGreenP.value),
             contentScale       = ContentScale.Crop,
             contentDescription = "",
         )
@@ -51,7 +51,7 @@ fun LaunchScreen(onLoginButtonClicked: () -> Unit) {
             modifier = M.padding(bottom = 8.dp),
             text     = stringResource(R.string.app_name_long),
             style    = headline1,
-            color    = mainGreen.value
+            color    = caribbeanGreenP.value
         )
 
         Text(
