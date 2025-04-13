@@ -57,9 +57,9 @@ fun AfDatePicker(onDateSelected: (Date) -> Unit) {
                 .fillMaxWidth()
                 .clickable {
                     showDatePickerDialog(
-                        context        = context,
-                        calendar       = calendar,
-                        selectedDate   = selectedDate,
+                        context = context,
+                        calendar = calendar,
+                        selectedDate = selectedDate,
                         onDateSelected = { date ->
                             onDateSelected(date)
                         }
@@ -117,6 +117,11 @@ fun showDatePickerDialog(
         day
     )
     datePickerDialog.show()
+
+    datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE)
+        ?.setTextColor(android.graphics.Color.parseColor("#FF0068FF"))
+    datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE)
+        ?.setTextColor(android.graphics.Color.parseColor("#FF0068FF"))
 }
 
 

@@ -37,7 +37,7 @@ fun NavGraph(
         modifier         = modifier
     ) {
         composable(NavigationItem.LaunchMenu.route) { LaunchScreen(onLoginButtonClicked = { onGoogleSignInClick() }) }
-        composable(NavigationItem.Home.route) { HomeScreen(onSignOutClick = onSignOutClick) }
+        composable(NavigationItem.Home.route) { HomeScreen(transactions = transactionViewModel.transactions, onSignOutClick = onSignOutClick) }
         composable(NavigationItem.Analysis.route) { AnalysisScreen() }
         composable(NavigationItem.Transactions.route) {
             TransactionsScreen(

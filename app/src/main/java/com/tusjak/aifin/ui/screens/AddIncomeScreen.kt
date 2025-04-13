@@ -3,6 +3,7 @@ package com.tusjak.aifin.ui.screens
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +38,7 @@ fun AddIncomeScreen(
             CenteredColumn(modifier = M.padding(16.dp)) {
                 AfDatePicker { selectedDate.value = it }
                 AfTextField(label = RS.title.string(), title)
-                AfTextField(label = RS.amount.string(), amount, amountValue = true)
+                AfTextField(label = RS.amount.string(), amount, keyboardType = KeyboardType.Number, amountValue = true)
                 AfTextField(label = RS.description.string(), description)
 
                 AfButton(

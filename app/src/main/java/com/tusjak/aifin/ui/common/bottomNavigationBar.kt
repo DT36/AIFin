@@ -30,7 +30,7 @@ fun BottomNavigationBar(navController: NavController) {
     val currentRoute by navController.currentBackStackEntryAsState()
 
     NavigationBar(
-        modifier       = M.background(Color.Transparent).clip(RoundedCornerShape(60.dp)),
+        modifier       = M.background(Color.Transparent).clip(RoundedCornerShape(topStart = 45.dp, topEnd = 45.dp)),
         containerColor = surfaceAccent.value.withDisabledOpacity()
     ) {
         NavigationItem.navBarScreens.forEach { screen ->
@@ -39,9 +39,8 @@ fun BottomNavigationBar(navController: NavController) {
                 selected = currentRoute?.destination?.route == screen.route,
                 onClick  = {
                     navController.navigate(screen.route) {
-                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        popUpTo(navController.graph.id) { inclusive = true }
                         launchSingleTop = true
-                        restoreState = true
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(

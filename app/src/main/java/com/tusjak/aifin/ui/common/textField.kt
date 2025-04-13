@@ -4,11 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,7 +27,7 @@ import com.tusjak.aifin.theme.radius5
 import ui.common.AfText
 
 @Composable
-fun AfTextField(label: String, value: MutableState<TextFieldValue>, amountValue: Boolean = false) {
+fun AfTextField(label: String, value: MutableState<TextFieldValue>, keyboardType: KeyboardType = KeyboardType.Text, amountValue: Boolean = false) {
 
     Column(
         modifier = M
@@ -55,6 +58,10 @@ fun AfTextField(label: String, value: MutableState<TextFieldValue>, amountValue:
                     style    = body1Bold
                 )
             },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction    = ImeAction.Done
+            ),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor   = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,

@@ -12,6 +12,7 @@ import com.tusjak.aifin.R
 import com.tusjak.aifin.data.TransactionType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.time.LocalTime
 
 typealias M  = Modifier
 typealias D  = R.drawable
@@ -33,6 +34,16 @@ fun TransactionType.toStringRepresentation(): String {
     return when (this) {
         TransactionType.INCOME -> RS.income.string()
         TransactionType.EXPENSE -> RS.expense.string()
+    }
+}
+
+@Composable
+fun getGreetingByTime(): String {
+    val currentHour = LocalTime.now().hour
+    return when {
+        currentHour in 0..10  -> RS.good_morning.string()
+        currentHour in 11..16 -> RS.good_day.string()
+        else                        -> RS.good_evening.string()
     }
 }
 

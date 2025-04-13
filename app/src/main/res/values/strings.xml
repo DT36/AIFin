@@ -24,4 +24,16 @@
     <string name="expenses">Expenses</string>
     <string name="expense">Expense</string>
     <string name="close">Close</string>
+    <string name="good_morning">Good Morning, Welcome Back</string>
+    <string name="good_day">Good Day, Welcome Back</string>
+    <string name="good_evening">Good Evening, Welcome Back</string>
+    <string name="last_transactions">Last Transactions</string>
+    <string name="set_goal">Set goal</string>
+    <string name="total_expense">Total Expense</string>
+    <string name="goal_message">%d%% Of your goal, looks good.</string>
+    <string name="valid_number">Please enter a valid number</string>
+    <string name="app_description">Track expenses, plan your budget, and discover personalized recommendations – powered by AI.</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="pick_dates">Select dates</string>
 </resources>

@@ -116,7 +116,7 @@ fun TransactionsScreen(
                             .weight(1f)
                             .clip(radius4)
                             .background(background.value)
-                            .padding(horizontal = 32.dp, vertical = 16.dp), vertical = spacedBy4
+                            .padding(horizontal = 8.dp, vertical = 16.dp), vertical = spacedBy4
                     ) {
                         Image(
                             modifier = M.size(20.dp),
@@ -138,7 +138,7 @@ fun TransactionsScreen(
                             .weight(1f)
                             .clip(radius4)
                             .background(background.value)
-                            .padding(horizontal = 32.dp, vertical = 16.dp), vertical = spacedBy4
+                            .padding(horizontal = 8.dp, vertical = 16.dp), vertical = spacedBy4
                     ) {
                         Image(
                             modifier = M.size(20.dp),
@@ -217,7 +217,7 @@ private fun TransactionList(
 }
 
 @Composable
-private fun TransactionItem(transaction: Transaction, onDeleteTransaction: (String) -> Unit) {
+fun TransactionItem(transaction: Transaction, onDeleteTransaction: (String) -> Unit) {
     CenteredRow(
         M
             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -232,7 +232,7 @@ private fun TransactionItem(transaction: Transaction, onDeleteTransaction: (Stri
             contentDescription = "Info",
         )
 
-        CenteredColumn(modifier = M.width(140.dp)) {
+        CenteredColumn(modifier = M.width(120.dp)) {
 
             Text(
                 text      = transaction.title,

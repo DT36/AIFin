@@ -3,6 +3,7 @@
     <style name="Theme.AIFin" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:windowBackground">@color/main_green</item>
+        <item name="android:statusBarColor">@color/main_green</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:windowTranslucentNavigation">true</item>-->
         <item name="android:navigationBarColor">@android:color/white</item>

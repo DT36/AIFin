@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tusjak.aifin.R
 import com.tusjak.aifin.common.M
+import com.tusjak.aifin.common.RS
+import com.tusjak.aifin.common.string
 import com.tusjak.aifin.theme.AIFinTheme
 import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.body1
@@ -54,7 +56,7 @@ fun LaunchScreen(onLoginButtonClicked: () -> Unit) {
 
         Text(
             modifier  = M.padding(horizontal = 32.dp, vertical = 8.dp),
-            text      = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod. ",
+            text      = RS.app_description.string(),
             textAlign = TextAlign.Center,
             style     = body1,
             color     = textColor.value

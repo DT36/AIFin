@@ -24,6 +24,7 @@ import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.theme.vividBlue
 import kotlinx.coroutines.launch
+import java.time.format.TextStyle
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,7 +42,8 @@ fun ShowDateRangePickerDialog(
         sheetState       = sheetState,
         containerColor   = background.value
     ) {
-        val state = rememberDateRangePickerState()
+        val state         = rememberDateRangePickerState()
+        val dateFormatter = DatePickerDefaults.dateFormatter()
 
         Column(modifier = M.fillMaxSize(), verticalArrangement = Arrangement.Top) {
             Row(
@@ -89,6 +91,25 @@ fun ShowDateRangePickerDialog(
             DateRangePicker(
                 state    = state,
                 modifier = M.weight(1f),
+                title = {
+                    Text(
+                        text = RS.pick_dates.string(),
+                        modifier = M.padding(horizontal = 32.dp),
+                    )
+                },
+                headline = {
+                    val startDateText = state.selectedStartDateMillis?.let { millis ->
+                        dateFormatter.formatDate(millis, Locale.getDefault())
+                    } ?: RS.from.string()
+                    val endDateText = state.selectedEndDateMillis?.let { millis ->
+                        dateFormatter.formatDate(millis, Locale.getDefault())
+                    } ?: RS.to.string()
+
+                    Text(
+                        text = "$startDateText - $endDateText",
+                        modifier = M.padding(horizontal = 32.dp),
+                    )
+                },
                 colors   = DatePickerDefaults.colors(
                     containerColor                    = background.value,
                     selectedDayContentColor           = oceanBlue,
