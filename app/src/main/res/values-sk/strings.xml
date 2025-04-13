@@ -23,4 +23,5 @@
     <string name="income">Príjem</string>
     <string name="expenses">Výdaje</string>
     <string name="expense">Výdaj</string>
+    <string name="close">Zavrieť</string>
 </resources>

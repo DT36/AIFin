@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 
-const val GLOBAL_OPACITY      = 0.5f
+const val GLOBAL_OPACITY      = 0.90f
 const val SKELETON_ALPHA      = 0.25f
 
 val darkTheme = mutableStateOf(true)

@@ -1,6 +1,7 @@
 package com.tusjak.aifin.ui.common
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.widget.DatePicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -35,9 +37,6 @@ import java.util.Date
 fun AfDatePicker(onDateSelected: (Date) -> Unit) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH)
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
 
     val selectedDate = mutable("")
 
@@ -57,18 +56,14 @@ fun AfDatePicker(onDateSelected: (Date) -> Unit) {
             modifier = M
                 .fillMaxWidth()
                 .clickable {
-                    val datePickerDialog = DatePickerDialog(
-                        context,
-                        { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
-                            calendar.set(selectedYear, selectedMonth, selectedDay)
-                            selectedDate.value = calendar.toFormattedDate()
-                            onDateSelected(calendar.time)
-                        },
-                        year,
-                        month,
-                        day
+                    showDatePickerDialog(
+                        context        = context,
+                        calendar       = calendar,
+                        selectedDate   = selectedDate,
+                        onDateSelected = { date ->
+                            onDateSelected(date)
+                        }
                     )
-                    datePickerDialog.show()
                 }
         ) {
             OutlinedTextField(
@@ -99,6 +94,31 @@ fun AfDatePicker(onDateSelected: (Date) -> Unit) {
         }
     }
 }
+
+fun showDatePickerDialog(
+    context: Context,
+    calendar: Calendar,
+    selectedDate: MutableState<String>? = null,
+    onDateSelected: (Date) -> Unit
+) {
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+            calendar.set(selectedYear, selectedMonth, selectedDay)
+            selectedDate?.value = calendar.toFormattedDate()
+            onDateSelected(calendar.time)
+        },
+        year,
+        month,
+        day
+    )
+    datePickerDialog.show()
+}
+
 
 @Preview
 @Composable

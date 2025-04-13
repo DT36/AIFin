@@ -19,8 +19,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.tusjak.aifin.common.M
 import com.tusjak.aifin.navigation.NavigationItem
-import com.tusjak.aifin.theme.background
-import com.tusjak.aifin.theme.lightGreen
 import com.tusjak.aifin.theme.statePressedAccent
 import com.tusjak.aifin.theme.surfaceAccent
 import com.tusjak.aifin.theme.surfaceInverted
@@ -32,7 +30,7 @@ fun BottomNavigationBar(navController: NavController) {
     val currentRoute by navController.currentBackStackEntryAsState()
 
     NavigationBar(
-        modifier       = M.clip(RoundedCornerShape(60.dp)),
+        modifier       = M.background(Color.Transparent).clip(RoundedCornerShape(60.dp)),
         containerColor = surfaceAccent.value.withDisabledOpacity()
     ) {
         NavigationItem.navBarScreens.forEach { screen ->

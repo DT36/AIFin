@@ -4,7 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material.icons.Icons
@@ -17,10 +24,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,11 +41,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.tusjak.aifin.common.M
 import com.tusjak.aifin.navigation.NavGraph
 import com.tusjak.aifin.navigation.NavigationItem
 import com.tusjak.aifin.navigation.Screen
 import com.tusjak.aifin.theme.AIFinTheme
-import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.headline4
 import com.tusjak.aifin.theme.mainGreen
 import com.tusjak.aifin.theme.value
@@ -130,41 +140,58 @@ fun AIFinApp(
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 
-    val showBottomBar = remember(currentBackStackEntry) {
-        currentRoute in listOf(
-            Screen.HOME.name,
-            Screen.ANALYSIS.name,
-            Screen.TRANSACTIONS.name,
-            Screen.PROFILE.name,
-        )
+    val showBottomBar by remember(currentRoute) {
+        derivedStateOf {
+            currentRoute in listOf(
+                Screen.HOME.name,
+                Screen.ANALYSIS.name,
+                Screen.TRANSACTIONS.name,
+                Screen.PROFILE.name,
+            )
+        }
     }
 
-    val showTopBar = remember(currentBackStackEntry) {
-        currentRoute in listOf(
-            Screen.ADD_EXPENSES.name,
-            Screen.ADD_INCOME.name
-        )
+    val showTopBar by remember(currentRoute) {
+        derivedStateOf {
+            currentRoute in listOf(
+                Screen.ADD_EXPENSES.name,
+                Screen.ADD_INCOME.name
+            )
+        }
     }
 
     val topBarTitle = when (currentRoute) {
         Screen.ADD_EXPENSES.name -> stringResource(R.string.title_add_expenses)
-        Screen.ADD_INCOME.name -> stringResource(R.string.title_add_income)
-        else                    -> ""
+        Screen.ADD_INCOME.name   -> stringResource(R.string.title_add_income)
+        else                     -> ""
     }
 
     Scaffold(
-        containerColor      = background.value,
+        containerColor      = Color.Transparent,
         contentWindowInsets = WindowInsets.safeDrawing,
-        topBar = {
-            if (showTopBar) {
+        topBar              = {
+            AnimatedVisibility(
+                visible = showTopBar,
+                enter = slideInVertically(
+                    initialOffsetY = { -it },
+                ) + fadeIn(),
+                exit = slideOutVertically(
+                    targetOffsetY = { -it },
+                ) + fadeOut()
+            ) {
                 CenterAlignedTopAppBar(
                     title          = { Text(topBarTitle, style = headline4) },
                     navigationIcon = {
-                        IconButton(onClick = { navController.popBackStack() }) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        IconButton(onClick = {
+                            navController.popBackStack()
+                        }) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
                         }
                     },
-                    colors        = TopAppBarDefaults.topAppBarColors(
+                    colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = mainGreen.value
                     )
                 )
@@ -176,17 +203,27 @@ fun AIFinApp(
         floatingActionButton = {
             if (showBottomBar) {
                 SpeedDialFAB(
-                    onFirstActionClick  = { navController.navigate(NavigationItem.AddIncome.route) },
-                    onSecondActionClick = { navController.navigate(NavigationItem.AddExpenses.route) }
+                    onFirstActionClick = {
+                        navController.navigate(NavigationItem.AddIncome.route)
+                    },
+                    onSecondActionClick = {
+                        navController.navigate(NavigationItem.AddExpenses.route)
+                    }
                 )
             }
         }
     ) { paddingValues ->
+        val adjustedModifier = Modifier.padding(
+            top   = paddingValues.calculateTopPadding(),
+            start = paddingValues.calculateStartPadding(LayoutDirection.Ltr),
+            end   = paddingValues.calculateEndPadding(LayoutDirection.Ltr)
+        )
+
         NavGraph(
             navController       = navController,
-            modifier            = Modifier.padding(paddingValues),
-            onGoogleSignInClick = { onGoogleSignInClick() },
-            onSignOutClick      = { onSignOutClick() }
+            modifier            = adjustedModifier,
+            onGoogleSignInClick = onGoogleSignInClick,
+            onSignOutClick      = onSignOutClick
         )
     }
 }
