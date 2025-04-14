@@ -14,6 +14,7 @@ import com.tusjak.aifin.ui.viewModels.TransactionViewModel
 import com.tusjak.aifin.ui.screens.AddExpensesScreen
 import com.tusjak.aifin.ui.screens.AddIncomeScreen
 import com.tusjak.aifin.ui.screens.AnalysisScreen
+import com.tusjak.aifin.ui.screens.CategoriesScreen
 import com.tusjak.aifin.ui.screens.HomeScreen
 import com.tusjak.aifin.ui.screens.LaunchScreen
 import com.tusjak.aifin.ui.screens.TransactionDetailScreen
@@ -53,7 +54,7 @@ fun NavGraph(
                 },
             )
         }
-        composable(NavigationItem.Profile.route) {}
+        composable(NavigationItem.Categories.route) { CategoriesScreen(transactions = transactionViewModel.transactions) }
         composable(NavigationItem.AddExpenses.route) { AddExpensesScreen(
             onAddExpense = { title, amount, date, category, description, type ->
                 transactionViewModel.addTransaction(title, amount, date, category, description, type)

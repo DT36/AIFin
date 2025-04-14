@@ -1,5 +1,6 @@
 package com.tusjak.aifin.ui.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -28,14 +29,14 @@ class TransactionViewModel : ViewModel() {
         transactionListener?.remove() // Odstránime starý listener
 
         auth.currentUser?.let { user ->
-            println("Setting up listener for user: ${user.uid}")
+            Log.d("TAG", "Setting up listener for user: ${user.uid}")
 
             transactionListener = db.collection("transactions")
                 .whereEqualTo("userId", user.uid)
                 .addSnapshotListener { snapshot, error ->
 
                     if (error != null) {
-                        println("Listener error: $error")
+                        Log.e("TAG", "Listener error: $error")
                         return@addSnapshotListener
                     }
 
@@ -57,19 +58,19 @@ class TransactionViewModel : ViewModel() {
                             )
                         }
 
-                        println("Transactions updated" + ": ${transactionList.size}")
+                        Log.d("TAG", "Transactions updated" + ": ${transactionList.size}")
                         _transactions.value = transactionList
                     }
                 }
         } ?: run {
-            println("No authenticated user, clearing transactions")
+            Log.d("TAG", "No authenticated user, clearing transactions")
             _transactions.value = emptyList()
         }
     }
 
     fun addTransaction(title: String, amount: Double, date: Date, category: String, description: String, type: TransactionType) {
         auth.currentUser?.let { user ->
-            println("Adding transaction for user: ${user.uid}")
+            Log.d("TAG", "Adding transaction for user: ${user.uid}")
             val transaction = hashMapOf(
                 "title"       to title,
                 "amount"      to amount,
@@ -82,30 +83,30 @@ class TransactionViewModel : ViewModel() {
             viewModelScope.launch {
                 db.collection("transactions").add(transaction)
                     .addOnSuccessListener { docRef ->
-                        println("Transaction added successfully with ID: ${docRef.id}")
+                        Log.d("TAG", "Transaction added successfully with ID: ${docRef.id}")
                     }
                     .addOnFailureListener { e ->
-                        println("Failed to add transaction: $e")
+                        Log.d("TAG", "Failed to add transaction: $e")
                     }
             }
-        } ?: println("Cannot add transaction: No authenticated user")
+        } ?: Log.d("TAG", "Cannot add transaction: No authenticated user")
     }
 
     fun deleteTransaction(transactionId: String) {
         auth.currentUser?.let { user ->
-            println("Deleting transaction with ID: $transactionId for user: ${user.uid}")
+            Log.d("TAG", "Deleting transaction with ID: $transactionId for user: ${user.uid}")
 
             viewModelScope.launch {
                 db.collection("transactions").document(transactionId)
                     .delete()
                     .addOnSuccessListener {
-                        println("Transaction deleted successfully: $transactionId")
+                        Log.d("TAG", "Transaction deleted successfully: $transactionId")
                     }
                     .addOnFailureListener { e ->
-                        println("Failed to delete transaction: $e")
+                        Log.d("TAG", "Failed to delete transaction: $e")
                     }
             }
-        } ?: println("Cannot delete transaction: No authenticated user")
+        } ?: Log.d("TAG", "Cannot delete transaction: No authenticated user")
     }
 
     fun getTransactionById(transactionId: String): Transaction? {

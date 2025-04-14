@@ -34,7 +34,7 @@ fun AfTextField(label: String, value: MutableState<TextFieldValue>, keyboardType
     Column(
         modifier = M
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(8.dp)
     ) {
 
         AfText(

@@ -147,7 +147,7 @@ fun AIFinApp(
                 Screen.HOME.name,
                 Screen.ANALYSIS.name,
                 Screen.TRANSACTIONS.name,
-                Screen.PROFILE.name,
+                Screen.CATEGORIES.name,
             )
         }
     }

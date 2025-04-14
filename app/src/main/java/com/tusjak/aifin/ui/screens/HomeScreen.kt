@@ -140,7 +140,7 @@ fun BalanceOverview(total: Double, expenses: Double) {
 
                     Text(
                         text = RS.total_balance.string(),
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = textColor.value
                     )
                 }
@@ -171,7 +171,7 @@ fun BalanceOverview(total: Double, expenses: Double) {
 
                     Text(
                         text = RS.total_expense.string(),
-                        fontSize = 12.sp,
+                        fontSize = 14.sp,
                         color = textColor.value
                     )
                 }

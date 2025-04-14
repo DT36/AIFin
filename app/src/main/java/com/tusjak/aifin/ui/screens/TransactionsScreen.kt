@@ -228,7 +228,8 @@ fun TransactionItem(transaction: Transaction, onTransactionClick: (String) -> Un
     ) {
 
         Image(
-            painter = painterResource(R.drawable.icon_salary),
+            painter = painterResource(R.drawable.ic_food),
+            modifier = M.size(57.dp),
             contentDescription = "Info",
         )
 
