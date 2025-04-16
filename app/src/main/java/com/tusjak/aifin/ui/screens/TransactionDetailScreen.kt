@@ -26,7 +26,7 @@ import java.util.Date
 @Composable
 fun TransactionDetailScreen(
     transaction        : Transaction?,
-    onEdit             : (String, String, Double, Date, String, String, TransactionType) -> Unit,
+    onEdit             : (String, String, Double, Date, Int, String, TransactionType) -> Unit,
     onDeleteTransaction: (String) -> Unit
 ) {
     TwoColorBackgroundScreen(
@@ -68,7 +68,7 @@ fun TransactionDetailScreen(
                             title.value.text,
                             amount.value.text.toDoubleWithCommaOrDot() ?: 0.0,
                             selectedDate.value,
-                            "category",
+                            it.category,
                             description.value.text,
                             it.type
                         )

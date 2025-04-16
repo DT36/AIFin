@@ -15,6 +15,7 @@ import com.tusjak.aifin.ui.screens.AddExpensesScreen
 import com.tusjak.aifin.ui.screens.AddIncomeScreen
 import com.tusjak.aifin.ui.screens.AnalysisScreen
 import com.tusjak.aifin.ui.screens.CategoriesScreen
+import com.tusjak.aifin.ui.screens.CategoryDetailScreen
 import com.tusjak.aifin.ui.screens.HomeScreen
 import com.tusjak.aifin.ui.screens.LaunchScreen
 import com.tusjak.aifin.ui.screens.TransactionDetailScreen
@@ -54,7 +55,29 @@ fun NavGraph(
                 },
             )
         }
-        composable(NavigationItem.Categories.route) { CategoriesScreen(transactions = transactionViewModel.transactions) }
+        composable(NavigationItem.Categories.route) {
+            CategoriesScreen(
+                transactions    = transactionViewModel.transactions,
+                onCategoryClick = { navController.navigate(NavigationItem.Category.createRoute(it)) })
+        }
+        composable(
+            route     = NavigationItem.Category.route,
+            arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+        ) {
+            val categoryId = it.arguments?.getInt("categoryId")
+
+            CategoryDetailScreen(
+                categoryId         = categoryId,
+                transactions       = transactionViewModel.transactions,
+                onTransactionClick = { transactionId ->
+                    navController.navigate(
+                        NavigationItem.TransactionDetail.createRoute(
+                            transactionId
+                        )
+                    )
+                },
+            )
+        }
         composable(NavigationItem.AddExpenses.route) { AddExpensesScreen(
             onAddExpense = { title, amount, date, category, description, type ->
                 transactionViewModel.addTransaction(title, amount, date, category, description, type)

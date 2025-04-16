@@ -1,6 +1,7 @@
 package com.tusjak.aifin.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,7 +32,7 @@ import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
 import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun CategoriesScreen(transactions: StateFlow<List<Transaction>>) {
+fun CategoriesScreen(transactions: StateFlow<List<Transaction>>, onCategoryClick: (Int) -> Unit) {
     val transactionList by transactions.collectAsState()
     val incomeSum  = transactionList.filter { it.type == TransactionType.INCOME }.sumOf { it.amount }
     val expenseSum = transactionList.filter { it.type == TransactionType.EXPENSE }.sumOf { it.amount }
@@ -47,13 +48,13 @@ fun CategoriesScreen(transactions: StateFlow<List<Transaction>>) {
 
         },
         contentOnWhite = {
-            CategoriesGrid()
+            CategoriesGrid(onCategoryClick)
         }
     )
 }
 
 @Composable
-fun CategoriesGrid() {
+fun CategoriesGrid(onCategoryClick: (Int) -> Unit) {
     LazyVerticalGrid(
         modifier              = M.fillMaxWidth(),
         columns               = GridCells.Fixed(3),
@@ -62,22 +63,22 @@ fun CategoriesGrid() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(categories.size) { index ->
-            CategoryItem(category = categories.sortedBy { it.name }[index])
+            CategoryItem(category = categories.sortedBy { it.name }[index], onCategoryClick = onCategoryClick)
         }
     }
 }
 
 @Composable
-fun CategoryItem(category: Category) {
+fun CategoryItem(category: Category, onCategoryClick: (Int) -> Unit) {
     CenteredColumn {
         Image(
-            modifier           = M.size(80.dp),
+            modifier           = M.size(80.dp).clickable { onCategoryClick(category.id) },
             painter            = painterResource(category.drawableRes),
-            contentDescription = category.name,
+            contentDescription = category.name.string(),
         )
 
         Text(
-            text  = category.name,
+            text  = category.name.string(),
             color = textColor.value,
             style = caption1
         )

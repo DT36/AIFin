@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="105dp"
+    android:height="98dp"
+    android:viewportWidth="105"
+    android:viewportHeight="98">
+
+  <!-- Modré zaoblené pozadie -->
+  <path
+      android:pathData="M25.79,0L79.21,0A25.79,25.79 0,0 1,105 25.79L105,71.84A25.79,25.79 0,0 1,79.21 97.63L25.79,97.63A25.79,25.79 0,0 1,0 71.84L0,25.79A25.79,25.79 0,0 1,25.79 0z"
+      android:fillColor="#6DB6FE"/>
+
+  <!-- Paleta -->
+  <path
+      android:pathData="M60,70c-10,8 -24,5 -31,-4c-5,-7 -5,-18 3,-25c8,-8 22,-10 32,-4c5,3 9,9 8,15c-1,6 -6,11 -9,12
+            c-2,1 -4,0 -5,-1c-2,-2 -5,-3 -7,-2c-3,1 -4,5 -2,8c2,4 6,6 10,6c4,0 8,2 10,6Z"
+      android:strokeColor="#F1FFF3"
+      android:strokeWidth="2.5"
+      android:strokeLineJoin="round"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"/>
+
+  <!-- Štetec -->
+  <path
+      android:pathData="M35,35c-2,2 -2,5 0,7l8,8c2,2 5,2 7,0c2,-2 2,-5 0,-7l-8,-8c-2,-2 -5,-2 -7,0Z
+            M34,42L30,46"
+      android:strokeColor="#F1FFF3"
+      android:strokeWidth="2.5"
+      android:strokeLineJoin="round"
+      android:strokeLineCap="round"
+      android:fillColor="#00000000"/>
+</vector>

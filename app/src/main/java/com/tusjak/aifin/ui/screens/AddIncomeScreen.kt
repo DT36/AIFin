@@ -23,7 +23,7 @@ import java.util.Date
 
 @Composable
 fun AddIncomeScreen(
-    onAddIncome: (String, Double, Date, String, String, TransactionType) -> Unit,
+    onAddIncome: (String, Double, Date, Int, String, TransactionType) -> Unit,
 ) {
     TwoColorBackgroundScreen(
         contentOnGreen = {
@@ -50,7 +50,7 @@ fun AddIncomeScreen(
                         title.value.text,
                         amount.value.text.toDoubleWithCommaOrDot() ?: 0.0,
                         selectedDate.value,
-                        "category",
+                        17,
                         description.value.text,
                         TransactionType.INCOME
                     )

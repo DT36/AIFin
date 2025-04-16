@@ -13,7 +13,7 @@ data class Transaction(
     val amount      : Double = 0.0,         // Suma transakcie
     val date        : Date = Date(),        // Dátum transakcie
     val description : String = "",          // Popis transakcie
-    val category    : String = "",          // Kategória
+    val category    : Int,                  // Kategória
     val type        : TransactionType,      // Typ: "expense" (výdavok) alebo "income" (príjem)
     val userId      : String = ""           // ID používateľa
 )

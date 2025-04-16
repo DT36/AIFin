@@ -42,6 +42,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.tusjak.aifin.common.M
+import com.tusjak.aifin.data.categories
 import com.tusjak.aifin.navigation.NavGraph
 import com.tusjak.aifin.navigation.NavigationItem
 import com.tusjak.aifin.navigation.Screen
@@ -140,6 +141,7 @@ fun AIFinApp(
 ) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
+    val arguments    = currentBackStackEntry?.arguments
 
     val showBottomBar by remember(currentRoute) {
         derivedStateOf {
@@ -158,6 +160,7 @@ fun AIFinApp(
                 Screen.ADD_EXPENSES.name -> true
                 Screen.ADD_INCOME.name   -> true
                 Screen.DETAIL.name       -> true
+                Screen.CATEGGORY.name    -> true
                 else                     -> false
             }
         }
@@ -167,6 +170,7 @@ fun AIFinApp(
         Screen.ADD_EXPENSES.name -> stringResource(R.string.title_add_expenses)
         Screen.ADD_INCOME.name   -> stringResource(R.string.title_add_income)
         Screen.DETAIL.name       -> stringResource(R.string.transaction_detail)
+        Screen.CATEGGORY.name    -> stringResource(arguments?.getInt("categoryId")?.let { categories[it] }?.name ?: R.string.category)
         else                     -> ""
     }
 

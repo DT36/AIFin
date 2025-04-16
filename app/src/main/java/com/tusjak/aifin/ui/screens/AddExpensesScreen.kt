@@ -22,7 +22,7 @@ import java.util.Date
 
 @Composable
 fun AddExpensesScreen(
-    onAddExpense: (String, Double, Date, String, String, TransactionType) -> Unit,
+    onAddExpense: (String, Double, Date, Int, String, TransactionType) -> Unit,
 ) {
     TwoColorBackgroundScreen(
         contentOnGreen = {
@@ -49,7 +49,7 @@ fun AddExpensesScreen(
                         title.value.text,
                         amount.value.text.toDoubleWithCommaOrDot() ?: 0.0,
                         selectedDate.value,
-                        "category",
+                        9,
                         description.value.text,
                         TransactionType.EXPENSE
                     )

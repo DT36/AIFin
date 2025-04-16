@@ -48,7 +48,7 @@ class TransactionViewModel : ViewModel() {
                                 amount      = doc.getDouble("amount") ?: 0.0,
                                 date        = doc.getDate("date") ?: Date(),
                                 description = doc.getString("description") ?: "",
-                                category    = doc.getString("category") ?: "",
+                                category    = doc.getLong("category")?.toInt() ?: 9,
                                 type        = try {
                                     TransactionType.valueOf(doc.getString("type") ?: "EXPENSE")
                                 } catch (e: IllegalArgumentException) {
@@ -68,7 +68,7 @@ class TransactionViewModel : ViewModel() {
         }
     }
 
-    fun addTransaction(title: String, amount: Double, date: Date, category: String, description: String, type: TransactionType) {
+    fun addTransaction(title: String, amount: Double, date: Date, category: Int, description: String, type: TransactionType) {
         auth.currentUser?.let { user ->
             Log.d("TAG", "Adding transaction for user: ${user.uid}")
             val transaction = hashMapOf(

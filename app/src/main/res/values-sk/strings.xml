@@ -40,4 +40,25 @@
     <string name="type">Typ</string>
     <string name="delete">Odstrániť</string>
     <string name="title_categories">Kategórie</string>
+    <string name="food">Jedlo</string>
+    <string name="transport">Doprava</string>
+    <string name="medicine">Lieky</string>
+    <string name="groceries">Potraviny</string>
+    <string name="rent">Nájomné</string>
+    <string name="gift">Darček</string>
+    <string name="entertainment">Zábava</string>
+    <string name="luxury">Luxus</string>
+    <string name="car">Auto</string>
+    <string name="other">Iné</string>
+    <string name="utilities">Energie</string>
+    <string name="insurance">Poistenie</string>
+    <string name="education">Vzdelanie</string>
+    <string name="health_fitness">Zdravie a fitnes</string>
+    <string name="travel">Cestovanie</string>
+    <string name="hobbies">Záľuby</string>
+    <string name="savings">Sporenie</string>
+    <string name="salary">Plat</string>
+    <string name="side_hustle">Bočné Príjmy</string>
+    <string name="investments">Investície</string>
+    <string name="total_income">Celkový Príjem</string>
 </resources>

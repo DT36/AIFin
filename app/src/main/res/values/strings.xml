@@ -40,4 +40,25 @@
     <string name="type">Type</string>
     <string name="delete">Delete</string>
     <string name="title_categories">Categories</string>
+    <string name="food">Food</string>
+    <string name="transport">Transport</string>
+    <string name="medicine">Medicine</string>
+    <string name="groceries">Groceries</string>
+    <string name="rent">Rent</string>
+    <string name="gift">Gift</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="luxury">Luxury</string>
+    <string name="car">Car</string>
+    <string name="other">Other</string>
+    <string name="utilities">Utilities</string>
+    <string name="insurance">Insurance</string>
+    <string name="education">Education</string>
+    <string name="health_fitness">Health &amp; fitness</string>
+    <string name="travel">Travel</string>
+    <string name="hobbies">Hobbies</string>
+    <string name="savings">Savings</string>
+    <string name="salary">Salary</string>
+    <string name="side_hustle">Side Hustle</string>
+    <string name="investments">Investments</string>
+    <string name="total_income">Total Income</string>
 </resources>

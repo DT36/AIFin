@@ -11,7 +11,8 @@ enum class Screen {
     CATEGORIES,
     ADD_EXPENSES,
     ADD_INCOME,
-    DETAIL
+    DETAIL,
+    CATEGGORY
 }
 
 sealed class NavigationItem(val route: String, @StringRes val titleResId: Int, val icon: Int) {
@@ -28,6 +29,13 @@ sealed class NavigationItem(val route: String, @StringRes val titleResId: Int, v
         icon       = R.drawable.transactions
     ) {
         fun createRoute(transactionId: String) = "${Screen.DETAIL.name}/$transactionId"
+    }
+    data object Category         : NavigationItem(
+        route      = "${Screen.CATEGGORY.name}/{categoryId}",
+        titleResId = R.string.category,
+        icon       = R.drawable.home
+    ) {
+        fun createRoute(categoryId: Int) = "${Screen.CATEGGORY.name}/$categoryId"
     }
 
     companion object {

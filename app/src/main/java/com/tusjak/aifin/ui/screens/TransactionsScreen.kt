@@ -185,7 +185,7 @@ fun TransactionsScreen(
 }
 
 @Composable
-private fun TransactionList(
+fun TransactionList(
     transactions: List<Transaction>,
     onTransactionClick: (String) -> Unit
 ) {

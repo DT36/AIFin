@@ -1,0 +1,37 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="105dp"
+    android:height="98dp"
+    android:viewportWidth="105"
+    android:viewportHeight="98">
+
+  <!-- Pozadie -->
+  <path
+      android:pathData="M25.79,0L79.21,0A25.79,25.79 0,0 1,105 25.79L105,71.84A25.79,25.79 0,0 1,79.21 97.63L25.79,97.63A25.79,25.79 0,0 1,0 71.84L0,25.79A25.79,25.79 0,0 1,25.79 0z"
+      android:fillColor="#6DB6FE"/>
+
+  <!-- Čiapka absolventa -->
+  <path
+      android:pathData="M52.5,25L75,33L52.5,41L30,33L52.5,25Z
+            M52.5,41V52
+            M66,36V47
+            M66,47C66,49 64,51 62,51"
+      android:strokeColor="#F1FFF3"
+      android:strokeWidth="2.8"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:fillColor="#00000000"/>
+
+  <!-- Kniha -->
+  <path
+      android:pathData="M38,60H68
+            A3,3 0 0 1 71,63V68
+            A3,3 0 0 1 68,71H38
+            A3,3 0 0 1 35,68V63
+            A3,3 0 0 1 38,60Z
+            M52.5,60V71"
+      android:strokeColor="#F1FFF3"
+      android:strokeWidth="2.8"
+      android:strokeLineCap="round"
+      android:strokeLineJoin="round"
+      android:fillColor="#00000000"/>
+</vector>
