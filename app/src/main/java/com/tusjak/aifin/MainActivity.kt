@@ -4,11 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -22,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -31,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -42,13 +40,18 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.tusjak.aifin.common.M
+import com.tusjak.aifin.common.RS
+import com.tusjak.aifin.common.getGreetingByTime
+import com.tusjak.aifin.common.string
 import com.tusjak.aifin.data.categories
 import com.tusjak.aifin.navigation.NavGraph
 import com.tusjak.aifin.navigation.NavigationItem
 import com.tusjak.aifin.navigation.Screen
 import com.tusjak.aifin.theme.AIFinTheme
+import com.tusjak.aifin.theme.button
 import com.tusjak.aifin.theme.headline4
 import com.tusjak.aifin.theme.mainGreen
+import com.tusjak.aifin.theme.oceanBlue
 import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.ui.common.BottomNavigationBar
@@ -154,22 +157,14 @@ fun AIFinApp(
         }
     }
 
-    val showTopBar by remember(currentRoute) {
-        derivedStateOf {
-            when (currentRoute?.substringBefore("/{") ?: currentRoute) {
-                Screen.ADD_EXPENSES.name -> true
-                Screen.ADD_INCOME.name   -> true
-                Screen.DETAIL.name       -> true
-                Screen.CATEGGORY.name    -> true
-                else                     -> false
-            }
-        }
-    }
-
     val topBarTitle = when (currentRoute?.substringBefore("/{") ?: currentRoute) {
-        Screen.ADD_EXPENSES.name -> stringResource(R.string.title_add_expenses)
-        Screen.ADD_INCOME.name   -> stringResource(R.string.title_add_income)
-        Screen.DETAIL.name       -> stringResource(R.string.transaction_detail)
+        Screen.HOME.name         -> getGreetingByTime()
+        Screen.ANALYSIS.name     -> RS.title_analysis.string()
+        Screen.TRANSACTIONS.name -> RS.title_transactions.string()
+        Screen.CATEGORIES.name   -> RS.title_categories.string()
+        Screen.ADD_EXPENSES.name -> RS.title_add_expenses.string()
+        Screen.ADD_INCOME.name   -> RS.title_add_income.string()
+        Screen.DETAIL.name       -> RS.transaction_detail.string()
         Screen.CATEGGORY.name    -> stringResource(arguments?.getInt("categoryId")?.let { categories[it] }?.name ?: R.string.category)
         else                     -> ""
     }
@@ -178,33 +173,41 @@ fun AIFinApp(
         containerColor      = Color.Transparent,
         contentWindowInsets = WindowInsets.safeDrawing,
         topBar              = {
-            AnimatedVisibility(
-                visible = showTopBar,
-                enter = slideInVertically(
-                    initialOffsetY = { -it },
-                ) + fadeIn(),
-                exit = slideOutVertically(
-                    targetOffsetY = { -it },
-                ) + fadeOut()
-            ) {
-                CenterAlignedTopAppBar(
-                    title          = { Text(topBarTitle, color = textColor.value, style = headline4) },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            navController.popBackStack()
-                        }) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                tint = textColor.value,
-                                contentDescription = "Back"
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = mainGreen.value
+            if (showBottomBar) TopAppBar(
+                title  = { Text(topBarTitle, color = textColor.value, style = headline4) },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = mainGreen.value
+                ),
+                actions = {
+                    if (currentRoute == Screen.HOME.name)
+                    Text(
+                        modifier = M
+                            .clickable { onSignOutClick() }
+                            .padding(horizontal = 16.dp),
+                        text     = stringResource(R.string.log_out),
+                        color    = oceanBlue,
+                        style    = button
                     )
+                }
+
+            )
+            else CenterAlignedTopAppBar(
+                title          = { Text(topBarTitle, color = textColor.value, style = headline4) },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        navController.popBackStack()
+                    }) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            tint = textColor.value,
+                            contentDescription = "Back"
+                        )
+                    }
+                },
+                colors         = TopAppBarDefaults.topAppBarColors(
+                    containerColor = mainGreen.value
                 )
-            }
+            )
         },
         bottomBar = {
             if (showBottomBar) BottomNavigationBar(navController)
@@ -231,8 +234,7 @@ fun AIFinApp(
         NavGraph(
             navController       = navController,
             modifier            = adjustedModifier,
-            onGoogleSignInClick = onGoogleSignInClick,
-            onSignOutClick      = onSignOutClick
+            onGoogleSignInClick = onGoogleSignInClick
         )
     }
 }

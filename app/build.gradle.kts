@@ -64,4 +64,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.firebase.appcheck.playintegrity)
+    implementation(libs.firebase.vertexai)
 }

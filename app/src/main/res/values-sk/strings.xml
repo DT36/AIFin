@@ -61,4 +61,6 @@
     <string name="side_hustle">Bočné Príjmy</string>
     <string name="investments">Investície</string>
     <string name="total_income">Celkový Príjem</string>
+    <string name="empty_transaction_list">Zoznam transakcií je prázdny</string>
+    <string name="empty_category_list">Zoznam kategórií je prázdny</string>
 </resources>

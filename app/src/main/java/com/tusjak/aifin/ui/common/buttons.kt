@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -125,7 +126,7 @@ fun AfButton(
         horizontal = Arrangement.Center,
         content = {
             if (loading)
-                //Spinner(isOnAccent = surfaceAccent.value == background)
+                Spinner()
             else {
                 if (startIcon != null)
                     Image(
@@ -175,6 +176,19 @@ fun AfToolbarTextButton(
         contentPadding = contentPadding,
         onClick        = onClick,
         content        = { Text(name, style = style) }
+    )
+}
+
+@Composable
+fun Spinner(
+    modifier: Modifier = Modifier,
+    size: Dp = 24.dp,
+    color: Color = caribbeanGreen
+) {
+    CircularProgressIndicator(
+        modifier = modifier.size(size),
+        color = color,
+        strokeWidth = 2.dp
     )
 }
 

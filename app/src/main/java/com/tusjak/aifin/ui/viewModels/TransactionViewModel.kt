@@ -92,6 +92,31 @@ class TransactionViewModel : ViewModel() {
         } ?: Log.d("TAG", "Cannot add transaction: No authenticated user")
     }
 
+    fun editTransaction(transactionId: String, title: String, amount: Double, date: Date, category: Int, description: String, type: TransactionType) {
+        auth.currentUser?.let { user ->
+            Log.d("TAG", "Editing transaction with ID: $transactionId for user: ${user.uid}")
+            val updatedTransaction = hashMapOf(
+                "title"       to title,
+                "amount"      to amount,
+                "date"        to date,
+                "description" to description,
+                "category"    to category,
+                "type"        to type.name,
+                "userId"      to user.uid
+            )
+            viewModelScope.launch {
+                db.collection("transactions").document(transactionId)
+                    .set(updatedTransaction)
+                    .addOnSuccessListener {
+                        Log.d("TAG", "Transaction updated successfully: $transactionId")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.d("TAG", "Failed to update transaction: $e")
+                    }
+            }
+        } ?: Log.d("TAG", "Cannot edit transaction: No authenticated user")
+    }
+
     fun deleteTransaction(transactionId: String) {
         auth.currentUser?.let { user ->
             Log.d("TAG", "Deleting transaction with ID: $transactionId for user: ${user.uid}")

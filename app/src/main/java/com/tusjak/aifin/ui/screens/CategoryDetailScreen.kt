@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.tusjak.aifin.R
 import com.tusjak.aifin.common.D
 import com.tusjak.aifin.common.M
 import com.tusjak.aifin.common.RS
@@ -34,7 +33,9 @@ import com.tusjak.aifin.data.Transaction
 import com.tusjak.aifin.data.TransactionType
 import com.tusjak.aifin.data.categories
 import com.tusjak.aifin.theme.body2
+import com.tusjak.aifin.theme.caribbeanGreen
 import com.tusjak.aifin.theme.honeydew
+import com.tusjak.aifin.theme.oceanBlue
 import com.tusjak.aifin.theme.spacedBy4
 import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
@@ -51,12 +52,19 @@ fun CategoryDetailScreen(
 ) {
     val transactionList by transactions.collectAsState()
     val transactionsByCategory = transactionList.filter { it.category == categoryId }
-    val incomeSum  = transactionsByCategory.filter { it.type == TransactionType.INCOME }.sumOf { it.amount }
-    val expenseSum = transactionsByCategory.filter { it.type == TransactionType.EXPENSE }.sumOf { it.amount }
-    val totalSum   = incomeSum.minus(expenseSum)
     val category   = categoryId?.let { categories[it] }
+    val isIncome   = category?.type == TransactionType.INCOME
 
     var dateRange by mutable<Pair<Long, Long>?>(null)
+
+    val filteredTransactions = dateRange?.let { (start, end) ->
+        transactionsByCategory.filter {
+            it.date.time in start..end
+        }
+    } ?: transactionsByCategory
+
+    val incomeSum  = filteredTransactions.filter { it.type == TransactionType.INCOME }.sumOf { it.amount }
+    val expenseSum = filteredTransactions.filter { it.type == TransactionType.EXPENSE }.sumOf { it.amount }
 
     TwoColorBackgroundScreen(
         contentOnGreen = {
@@ -71,20 +79,20 @@ fun CategoryDetailScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Image(
-                                painter = painterResource(R.drawable.income),
-                                colorFilter = ColorFilter.tint(textColor.value),
+                                painter = painterResource(if (isIncome) D.income else D.expense),
+                                colorFilter = ColorFilter.tint(if (isIncome) caribbeanGreen else oceanBlue),
                                 contentDescription = RS.total_balance.string(),
                             )
 
                             Text(
-                                text = if (category?.type == TransactionType.INCOME) RS.total_income.string() else RS.total_expense.string(),
+                                text = if (isIncome) RS.total_income.string() else RS.total_expense.string(),
                                 style = body2,
                                 color = textColor.value
                             )
                         }
 
                         Text(
-                            text = totalSum.toEuroAmount(),
+                            text = if (isIncome) incomeSum.toEuroAmount() else expenseSum.toEuroAmount(),
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = honeydew
@@ -123,7 +131,7 @@ fun CategoryDetailScreen(
                 )
             }
 
-            TransactionList(transactionsByCategory, onTransactionClick)
+            TransactionList(filteredTransactions, onTransactionClick)
         }
     )
 }

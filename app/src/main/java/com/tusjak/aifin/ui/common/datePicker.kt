@@ -25,6 +25,7 @@ import com.tusjak.aifin.common.RS
 import com.tusjak.aifin.common.mutable
 import com.tusjak.aifin.common.string
 import com.tusjak.aifin.common.toFormattedDate
+import com.tusjak.aifin.common.toFormattedDateYear
 import com.tusjak.aifin.theme.body1
 import com.tusjak.aifin.theme.body2Bold
 import com.tusjak.aifin.theme.lightGreen
@@ -36,11 +37,11 @@ import java.util.Calendar
 import java.util.Date
 
 @Composable
-fun AfDatePicker(onDateSelected: (Date) -> Unit) {
+fun AfDatePicker(date: Date = Date(), onDateSelected: (Date) -> Unit) {
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
 
-    val selectedDate = mutable("")
+    val selectedDate = mutable(date.toFormattedDateYear())
 
     Column(
         modifier = M

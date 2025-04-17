@@ -25,10 +25,12 @@ androidx-ui = { module = "androidx.compose.ui:ui" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose" , version.ref = "nav_version" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+firebase-appcheck-playintegrity = { module = "com.google.firebase:firebase-appcheck-playintegrity" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+firebase-vertexai = { module = "com.google.firebase:firebase-vertexai" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

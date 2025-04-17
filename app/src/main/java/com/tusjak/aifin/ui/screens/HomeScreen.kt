@@ -73,7 +73,6 @@ import ui.common.AfText
 @Composable
 fun HomeScreen(
     transactions      : StateFlow<List<Transaction>>,
-    onSignOutClick    : () -> Unit,
     onTransactionClick: (String) -> Unit
 ) {
     val transactionList by transactions.collectAsState()
@@ -83,35 +82,21 @@ fun HomeScreen(
 
     TwoColorBackgroundScreen(
         contentOnGreen = {
-            Column(modifier = M.padding(32.dp)) {
-
-                CenteredRow(modifier = M.fillMaxWidth(), horizontal = Arrangement.SpaceBetween) {
-
-                    Text(getGreetingByTime(), color = textColor.value, style = headline4)
-
-                    Text(
-                        modifier = M
-                            .clickable { onSignOutClick() }
-                            .padding(vertical = 8.dp),
-                        text     = stringResource(R.string.log_out),
-                        color    = oceanBlue,
-                        style    = button
-                    )
-                }
-
-                BalanceOverview(totalSum, expenseSum)
-            }
-
+            BalanceOverview(totalSum, expenseSum)
         },
         contentOnWhite = {
-            LastTransactionsList(transactionList, onTransactionClick)
+            if (transactionList.isEmpty()) {
+                EmptyTransactionList()
+            } else {
+                LastTransactionsList(transactionList, onTransactionClick)
+            }
         }
     )
 }
 
 
 @Composable
-fun BalanceOverview(total: Double, expenses: Double) {
+fun BalanceOverview(total: Double, expenses: Double, showGoal: Boolean = true) {
     val context     = LocalContext.current
     val showDialog  = mutable(false)
     val sharedPrefs = remember { context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE) }
@@ -123,7 +108,7 @@ fun BalanceOverview(total: Double, expenses: Double) {
     Column(
         modifier = M
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 32.dp)
+            .padding(32.dp)
     ) {
         Row(
             modifier = M.fillMaxWidth(),
@@ -134,7 +119,7 @@ fun BalanceOverview(total: Double, expenses: Double) {
                 Row(horizontalArrangement = spacedBy4, verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter            = painterResource(R.drawable.income),
-                        colorFilter        = ColorFilter.tint(textColor.value),
+                        colorFilter        = ColorFilter.tint(caribbeanGreen),
                         contentDescription = RS.total_balance.string(),
                     )
 
@@ -165,7 +150,7 @@ fun BalanceOverview(total: Double, expenses: Double) {
                 Row(horizontalArrangement = spacedBy4, verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter            = painterResource(R.drawable.expense),
-                        colorFilter        = ColorFilter.tint(textColor.value),
+                        colorFilter        = ColorFilter.tint(oceanBlue),
                         contentDescription = RS.total_expense.string(),
                     )
 
@@ -185,54 +170,56 @@ fun BalanceOverview(total: Double, expenses: Double) {
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        if (sharedPrefs.contains("goal")) {
-            val goal = getSavedGoal(context)
-
-            // Progress Bar Row
-            Row(
-                modifier          = M.padding(top = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                CustomProgressBar(
-                    (total / goal).toFloat(),
-                    goal.toEuroAmount()
-                ) {
-                    showDialog.value = true
-                }
-
-            }
-
+        if (showGoal) {
             Spacer(modifier = Modifier.height(8.dp))
 
-            Row(
-                modifier = M.padding(horizontal = 12.dp),
-                horizontalArrangement = spacedBy4,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    painter            = painterResource(R.drawable.check),
-                    colorFilter        = ColorFilter.tint(textColor.value),
-                    contentDescription = "",
-                )
+            if (sharedPrefs.contains("goal")) {
+                val goal = getSavedGoal(context)
 
+                // Progress Bar Row
+                Row(
+                    modifier          = M.padding(top = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    CustomProgressBar(
+                        (total / goal).toFloat(),
+                        goal.toEuroAmount()
+                    ) {
+                        showDialog.value = true
+                    }
+
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = M.padding(horizontal = 12.dp),
+                    horizontalArrangement = spacedBy4,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter            = painterResource(R.drawable.check),
+                        colorFilter        = ColorFilter.tint(textColor.value),
+                        contentDescription = "",
+                    )
+
+                    Text(
+                        text = stringResource(id = R.string.goal_message, ((total / goal)*100).toInt()),
+                        fontSize = 14.sp,
+                        color = textColor.value
+                    )
+                }
+            } else {
                 Text(
-                    text = stringResource(id = R.string.goal_message, ((total / goal)*100).toInt()),
-                    fontSize = 14.sp,
-                    color = textColor.value
+                    modifier = M
+                        .padding(vertical = 16.dp)
+                        .clickable { showDialog.value = true },
+                    text = RS.set_goal.string(),
+                    color = oceanBlue,
+                    style = button
                 )
             }
-        } else {
-            Text(
-                modifier = M
-                    .padding(vertical = 16.dp)
-                    .clickable { showDialog.value = true },
-                text = RS.set_goal.string(),
-                color = oceanBlue,
-                style = button
-            )
         }
     }
 }

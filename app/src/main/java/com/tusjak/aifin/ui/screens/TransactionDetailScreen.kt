@@ -32,15 +32,15 @@ fun TransactionDetailScreen(
     TwoColorBackgroundScreen(
         contentOnGreen = {},
         contentOnWhite = {
-            transaction?.let {
-                val title        = mutable(TextFieldValue(it.title))
-                val amount       = mutable(TextFieldValue(it.amount.toString()))
-                val description  = mutable(TextFieldValue(it.description))
-                val type         = mutable(TextFieldValue(it.type.toStringRepresentation()))
-                val selectedDate = mutable(Date())
+            transaction?.let { transaction ->
+                val title        = mutable(TextFieldValue(transaction.title))
+                val amount       = mutable(TextFieldValue(transaction.amount.toString()))
+                val description  = mutable(TextFieldValue(transaction.description))
+                val type         = mutable(TextFieldValue(transaction.type.toStringRepresentation()))
+                val selectedDate = mutable(transaction.date)
 
                 CenteredColumn(modifier = M.padding(16.dp)) {
-                    AfDatePicker { selectedDate.value = it }
+                    AfDatePicker(date = transaction.date) { selectedDate.value = it }
                     AfTextField(label = RS.title.string(), title)
                     AfTextField(
                         label = RS.amount.string(),
@@ -56,7 +56,7 @@ fun TransactionDetailScreen(
                         text     = stringResource(R.string.delete),
                         style    = buttonDanger
                     ) {
-                        onDeleteTransaction(it.id)
+                        onDeleteTransaction(transaction.id)
                     }
 
                     AfButton(
@@ -64,13 +64,13 @@ fun TransactionDetailScreen(
                         text     = stringResource(R.string.save),
                     ) {
                         onEdit(
-                            it.id,
+                            transaction.id,
                             title.value.text,
                             amount.value.text.toDoubleWithCommaOrDot() ?: 0.0,
                             selectedDate.value,
-                            it.category,
+                            transaction.category,
                             description.value.text,
-                            it.type
+                            transaction.type
                         )
                     }
                 }

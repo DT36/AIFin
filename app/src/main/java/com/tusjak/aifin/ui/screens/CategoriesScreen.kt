@@ -3,10 +3,8 @@ package com.tusjak.aifin.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -24,7 +22,6 @@ import com.tusjak.aifin.data.Transaction
 import com.tusjak.aifin.data.TransactionType
 import com.tusjak.aifin.data.categories
 import com.tusjak.aifin.theme.caption1
-import com.tusjak.aifin.theme.headline4
 import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.ui.common.CenteredColumn
@@ -40,21 +37,20 @@ fun CategoriesScreen(transactions: StateFlow<List<Transaction>>, onCategoryClick
 
     TwoColorBackgroundScreen(
         contentOnGreen = {
-            Column(modifier = M.padding(32.dp)) {
-                Text(RS.title_categories.string(), color = textColor.value, style = headline4)
-
-                BalanceOverview(totalSum, expenseSum)
-            }
-
+            BalanceOverview(totalSum, expenseSum, showGoal = false)
         },
         contentOnWhite = {
-            CategoriesGrid(onCategoryClick)
+            if (transactionList.isEmpty()) {
+                EmptyTransactionList(message = RS.empty_category_list.string())
+            } else {
+                CategoriesGrid(filterCategories(categories, transactionList), onCategoryClick)
+            }
         }
     )
 }
 
 @Composable
-fun CategoriesGrid(onCategoryClick: (Int) -> Unit) {
+fun CategoriesGrid(categories: List<Category>, onCategoryClick: (Int) -> Unit) {
     LazyVerticalGrid(
         modifier              = M.fillMaxWidth(),
         columns               = GridCells.Fixed(3),
@@ -83,4 +79,9 @@ fun CategoryItem(category: Category, onCategoryClick: (Int) -> Unit) {
             style = caption1
         )
     }
+}
+
+private fun filterCategories(categories: List<Category>, transactions: List<Transaction>): List<Category> {
+    val categoryIdsWithTransactions = transactions.map { it.category }.toSet()
+    return categories.filter { it.id in categoryIdsWithTransactions }
 }

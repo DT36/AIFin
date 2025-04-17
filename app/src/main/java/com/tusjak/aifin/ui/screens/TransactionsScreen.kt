@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -26,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -44,11 +50,11 @@ import com.tusjak.aifin.common.toFormattedDate
 import com.tusjak.aifin.common.toStringRepresentation
 import com.tusjak.aifin.data.Transaction
 import com.tusjak.aifin.data.TransactionType
+import com.tusjak.aifin.data.categories
 import com.tusjak.aifin.theme.background
 import com.tusjak.aifin.theme.body2
 import com.tusjak.aifin.theme.body2Bold
 import com.tusjak.aifin.theme.caribbeanGreen
-import com.tusjak.aifin.theme.headline4
 import com.tusjak.aifin.theme.mainGreen
 import com.tusjak.aifin.theme.oceanBlue
 import com.tusjak.aifin.theme.radius4
@@ -88,8 +94,7 @@ fun TransactionsScreen(
 
     TwoColorBackgroundScreen(
         contentOnGreen = {
-            Column(modifier = M.padding(32.dp), verticalArrangement = spacedBy16) {
-                Text(RS.title_transactions.string(), color = textColor.value, style = headline4)
+            Column(modifier = M.padding(start = 32.dp,end = 32.dp, top = 16.dp, bottom = 32.dp), verticalArrangement = spacedBy16) {
 
                 CenteredRow(
                     M
@@ -179,7 +184,11 @@ fun TransactionsScreen(
                 )
             }
 
-            TransactionList(filteredTransactions, onTransactionClick)
+            if (transactionList.isEmpty()) {
+                EmptyTransactionList()
+            } else {
+                TransactionList(filteredTransactions, onTransactionClick)
+            }
         }
     )
 }
@@ -209,7 +218,7 @@ fun TransactionList(
                 MonthItem(yearMonth)
             }
 
-            items(transactionsInMonth) { transaction ->
+            items(transactionsInMonth.sortedByDescending { it.date }) { transaction ->
                 TransactionItem(transaction, onTransactionClick)
             }
         }
@@ -228,7 +237,7 @@ fun TransactionItem(transaction: Transaction, onTransactionClick: (String) -> Un
     ) {
 
         Image(
-            painter = painterResource(R.drawable.ic_food),
+            painter = painterResource(categories.first { it.id == transaction.category }.drawableRes),
             modifier = M.size(57.dp),
             contentDescription = "Info",
         )
@@ -296,6 +305,34 @@ private fun MonthItem(yearMonth: Pair<Int, Month>) {
             color     = textColor.value,
             textAlign = TextAlign.Center,
             style     = body2Bold
+        )
+    }
+}
+
+@Composable
+fun EmptyTransactionList(
+    modifier: Modifier = Modifier,
+    message: String = RS.empty_transaction_list.string()
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 64.dp, horizontal = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Image(
+            modifier           = M.padding(16.dp).size(60.dp),
+            painter            = painterResource(D.empty_icon),
+            colorFilter        = ColorFilter.tint(caribbeanGreen),
+            contentDescription = message,
+        )
+
+        Text(
+            text      = message,
+            style     = body2,
+            color     = textColor.value,
+            textAlign = TextAlign.Center
         )
     }
 }

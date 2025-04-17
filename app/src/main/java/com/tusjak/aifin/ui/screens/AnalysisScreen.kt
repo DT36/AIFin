@@ -16,9 +16,6 @@ import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
 fun AnalysisScreen() {
     TwoColorBackgroundScreen(
         contentOnGreen = {
-            Column(modifier = M.padding(32.dp)) {
-                Text("Analytics", color = textColor.value, style = headline4)
-            }
 
         },
         contentOnWhite = {}

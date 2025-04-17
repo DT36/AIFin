@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.google.firebase.auth.FirebaseAuth
+import com.tusjak.aifin.data.TransactionCategorizer
 import com.tusjak.aifin.ui.viewModels.TransactionViewModel
 import com.tusjak.aifin.ui.screens.AddExpensesScreen
 import com.tusjak.aifin.ui.screens.AddIncomeScreen
@@ -25,8 +26,7 @@ import com.tusjak.aifin.ui.screens.TransactionsScreen
 fun NavGraph(
     navController      : NavHostController,
     modifier           : Modifier,
-    onGoogleSignInClick: () -> Unit,
-    onSignOutClick     : () -> Unit
+    onGoogleSignInClick: () -> Unit
 ) {
     val transactionViewModel: TransactionViewModel = viewModel()
     val auth = FirebaseAuth.getInstance()
@@ -40,7 +40,6 @@ fun NavGraph(
         composable(NavigationItem.Home.route) {
             HomeScreen(
                 transactions       = transactionViewModel.transactions,
-                onSignOutClick     = onSignOutClick,
                 onTransactionClick = { transactionId ->
                     navController.navigate(NavigationItem.TransactionDetail.createRoute(transactionId))
                 },
@@ -83,12 +82,14 @@ fun NavGraph(
                 transactionViewModel.addTransaction(title, amount, date, category, description, type)
                 navController.popBackStack()
             },
+            transactionCategorizer = TransactionCategorizer()
         ) }
         composable(NavigationItem.AddIncome.route) { AddIncomeScreen(
             onAddIncome = { title, amount, date, category, description, type ->
                 transactionViewModel.addTransaction(title, amount, date, category, description, type)
                 navController.popBackStack()
             },
+            transactionCategorizer = TransactionCategorizer()
         ) }
         composable(
             route = NavigationItem.TransactionDetail.route,
@@ -100,8 +101,7 @@ fun NavGraph(
             TransactionDetailScreen(
                 transaction         = transaction,
                 onEdit              = { id, title, amount, date, category, description, type ->
-                    transactionViewModel.deleteTransaction(id)
-                    transactionViewModel.addTransaction(title, amount, date, category, description, type)
+                    transactionViewModel.editTransaction(id, title, amount, date, category, description, type)
                     navController.popBackStack()
                 },
                 onDeleteTransaction = {

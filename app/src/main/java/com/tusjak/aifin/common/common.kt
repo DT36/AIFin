@@ -24,6 +24,11 @@ fun Calendar.toFormattedDate(): String {
     return dateFormat.format(this.time)
 }
 
+fun Date.toFormattedDateYear(): String {
+    val dateFormat = SimpleDateFormat("d MMMM, yyyy", Locale.getDefault())
+    return dateFormat.format(this.time)
+}
+
 fun Date.toFormattedDate(): String {
     val dateFormat = SimpleDateFormat("d MMMM", Locale.getDefault())
     return dateFormat.format(this)

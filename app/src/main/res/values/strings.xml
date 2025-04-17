@@ -61,4 +61,6 @@
     <string name="side_hustle">Side Hustle</string>
     <string name="investments">Investments</string>
     <string name="total_income">Total Income</string>
+    <string name="empty_transaction_list">Transaction list is empty</string>
+    <string name="empty_category_list">Category list is empty</string>
 </resources>

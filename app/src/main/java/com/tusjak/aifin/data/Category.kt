@@ -34,3 +34,8 @@ val categories = listOf(
     Category(id = 18, name = RS.side_hustle, type = TransactionType.INCOME, drawableRes = D.ic_side_hustle),
     Category(id = 19, name = RS.investments, type = TransactionType.INCOME, drawableRes = D.ic_investment)
 )
+
+object TransactionCategories {
+    const val DEFAULT_EXPENSE_CATEGORY = 9
+    const val DEFAULT_INCOME_CATEGORY = 17
+}
