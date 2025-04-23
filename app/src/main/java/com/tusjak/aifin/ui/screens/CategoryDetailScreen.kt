@@ -33,7 +33,7 @@ import com.tusjak.aifin.data.Transaction
 import com.tusjak.aifin.data.TransactionType
 import com.tusjak.aifin.data.categories
 import com.tusjak.aifin.theme.body2
-import com.tusjak.aifin.theme.caribbeanGreen
+import com.tusjak.aifin.theme.greenIcon
 import com.tusjak.aifin.theme.honeydew
 import com.tusjak.aifin.theme.oceanBlue
 import com.tusjak.aifin.theme.spacedBy4
@@ -80,7 +80,7 @@ fun CategoryDetailScreen(
                         ) {
                             Image(
                                 painter = painterResource(if (isIncome) D.income else D.expense),
-                                colorFilter = ColorFilter.tint(if (isIncome) caribbeanGreen else oceanBlue),
+                                colorFilter = ColorFilter.tint(if (isIncome) greenIcon.value else oceanBlue),
                                 contentDescription = RS.total_balance.string(),
                             )
 

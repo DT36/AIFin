@@ -1,6 +1,9 @@
 package com.tusjak.aifin.ui.screens
 
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
@@ -44,8 +47,9 @@ fun AddIncomeScreen(
             val selectedDate = mutable(Date())
             val categoryId   = mutable(DEFAULT_INCOME_CATEGORY)
             val loading      = mutable(false)
+            val scrollState  = rememberScrollState()
 
-            CenteredColumn(modifier = M.padding(16.dp)) {
+            CenteredColumn(modifier = M.verticalScroll(scrollState).padding(16.dp).imePadding()) {
                 AfDatePicker { selectedDate.value = it }
                 AfTextField(label = RS.title.string(), title)
                 AfTextField(label = RS.amount.string(), amount, keyboardType = KeyboardType.Number, amountValue = true)

@@ -63,4 +63,5 @@
     <string name="total_income">Celkový Príjem</string>
     <string name="empty_transaction_list">Zoznam transakcií je prázdny</string>
     <string name="empty_category_list">Zoznam kategórií je prázdny</string>
+    <string name="date_filter">Od %s do %s</string>
 </resources>

@@ -2,14 +2,19 @@ package com.tusjak.aifin.data
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.ui.graphics.Color
 import com.tusjak.aifin.common.D
 import com.tusjak.aifin.common.RS
+import com.tusjak.aifin.theme.background
+import com.tusjak.aifin.theme.value
 
 data class Category(
     val id                      : Int,
     @StringRes val name         : Int,
     val type                    : TransactionType,
-    @DrawableRes val drawableRes: Int
+    @DrawableRes val drawableRes: Int,
+    val transactionSum          : Double = 0.0,
+    val color                   : Color = background.value
 )
 
 val categories = listOf(

@@ -1,7 +1,10 @@
 package com.tusjak.aifin.ui.screens
 
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -38,8 +41,9 @@ fun TransactionDetailScreen(
                 val description  = mutable(TextFieldValue(transaction.description))
                 val type         = mutable(TextFieldValue(transaction.type.toStringRepresentation()))
                 val selectedDate = mutable(transaction.date)
+                val scrollState  = rememberScrollState()
 
-                CenteredColumn(modifier = M.padding(16.dp)) {
+                CenteredColumn(modifier = M.verticalScroll(scrollState).padding(16.dp).imePadding()) {
                     AfDatePicker(date = transaction.date) { selectedDate.value = it }
                     AfTextField(label = RS.title.string(), title)
                     AfTextField(

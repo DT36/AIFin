@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.sp
 import com.tusjak.aifin.R
 import com.tusjak.aifin.common.M
 import com.tusjak.aifin.common.RS
-import com.tusjak.aifin.common.getGreetingByTime
 import com.tusjak.aifin.common.mutable
 import com.tusjak.aifin.common.string
 import com.tusjak.aifin.common.toEuroAmount
@@ -58,14 +57,13 @@ import com.tusjak.aifin.theme.body2Bold
 import com.tusjak.aifin.theme.oceanBlue
 import com.tusjak.aifin.theme.button
 import com.tusjak.aifin.theme.caribbeanGreen
-import com.tusjak.aifin.theme.headline4
+import com.tusjak.aifin.theme.greenIcon
 import com.tusjak.aifin.theme.honeydew
 import com.tusjak.aifin.theme.spacedBy4
 import com.tusjak.aifin.theme.textColor
 import com.tusjak.aifin.theme.value
 import com.tusjak.aifin.theme.void
 import com.tusjak.aifin.ui.common.AfTextField
-import com.tusjak.aifin.ui.common.CenteredRow
 import com.tusjak.aifin.ui.common.TwoColorBackgroundScreen
 import kotlinx.coroutines.flow.StateFlow
 import ui.common.AfText
@@ -119,7 +117,7 @@ fun BalanceOverview(total: Double, expenses: Double, showGoal: Boolean = true) {
                 Row(horizontalArrangement = spacedBy4, verticalAlignment = Alignment.CenterVertically) {
                     Image(
                         painter            = painterResource(R.drawable.income),
-                        colorFilter        = ColorFilter.tint(caribbeanGreen),
+                        colorFilter        = ColorFilter.tint(greenIcon.value),
                         contentDescription = RS.total_balance.string(),
                     )
 
@@ -171,10 +169,11 @@ fun BalanceOverview(total: Double, expenses: Double, showGoal: Boolean = true) {
         }
 
         if (showGoal) {
+            val goal = getSavedGoal(context)
+
             Spacer(modifier = Modifier.height(8.dp))
 
-            if (sharedPrefs.contains("goal")) {
-                val goal = getSavedGoal(context)
+            if (sharedPrefs.contains("goal") && goal > 0) {
 
                 // Progress Bar Row
                 Row(
