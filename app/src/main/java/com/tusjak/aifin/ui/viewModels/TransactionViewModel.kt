@@ -6,10 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.tusjak.aifin.data.FinancialAnalysisResult
 import com.tusjak.aifin.data.Transaction
+import com.tusjak.aifin.data.TransactionAnalyzer
 import com.tusjak.aifin.data.TransactionType
+import com.tusjak.aifin.data.categories
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -18,6 +22,9 @@ class TransactionViewModel : ViewModel() {
     private val auth = FirebaseAuth.getInstance()
     private val _transactions = MutableStateFlow<List<Transaction>>(emptyList())
     val transactions: StateFlow<List<Transaction>> get() = _transactions
+
+    private val _analysisResult = MutableStateFlow<FinancialAnalysisResult?>(null)
+    val analysisResult: StateFlow<FinancialAnalysisResult?> = _analysisResult.asStateFlow()
 
     private var transactionListener: ListenerRegistration? = null
 
@@ -140,6 +147,24 @@ class TransactionViewModel : ViewModel() {
 
     fun onAuthStateChanged() {
         setupListener() // Obnoví listener pri zmene autentifikácie
+    }
+
+    fun analyzeTransactions(context: android.content.Context) {
+        if (transactions.value.isEmpty()) {
+            _analysisResult.value = FinancialAnalysisResult(
+                summary = "Nie sú dostupné žiadne transakcie na analýzu.",
+                recommendations = emptyList()
+            )
+            return
+        }
+        viewModelScope.launch {
+            val analyzer = TransactionAnalyzer()
+            _analysisResult.value = analyzer.analyzeTransactions(
+                context = context,
+                transactions = transactions.value,
+                categories = categories
+            )
+        }
     }
 
     override fun onCleared() {

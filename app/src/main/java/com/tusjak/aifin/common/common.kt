@@ -1,6 +1,7 @@
 package com.tusjak.aifin.common
 
 import android.annotation.SuppressLint
+import android.content.Context
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -32,4 +33,13 @@ fun Date.toFormattedDateYear(): String {
 fun Date.toFormattedDate(): String {
     val dateFormat = SimpleDateFormat("d MMMM", Locale.getDefault())
     return dateFormat.format(this)
+}
+
+fun getDeviceLanguage(): String {
+    val locale = Locale.getDefault()
+    return when (locale.language) {
+        "sk" -> "slovak"
+        "en" -> "english"
+        else -> "english"
+    }
 }

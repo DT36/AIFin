@@ -64,4 +64,6 @@
     <string name="empty_transaction_list">Transaction list is empty</string>
     <string name="empty_category_list">Category list is empty</string>
     <string name="date_filter">From %s to %s</string>
+    <string name="summary_title">Summary</string>
+    <string name="recommendations">Recommendations</string>
 </resources>

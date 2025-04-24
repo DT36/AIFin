@@ -22,6 +22,7 @@ import com.tusjak.aifin.ui.screens.LaunchScreen
 import com.tusjak.aifin.ui.screens.TransactionDetailScreen
 import com.tusjak.aifin.ui.screens.TransactionsScreen
 
+
 @Composable
 fun NavGraph(
     navController      : NavHostController,
@@ -45,7 +46,7 @@ fun NavGraph(
                 },
             )
         }
-        composable(NavigationItem.Analysis.route) { AnalysisScreen() }
+        composable(NavigationItem.Analysis.route) { AnalysisScreen(viewModel = transactionViewModel) }
         composable(NavigationItem.Transactions.route) {
             TransactionsScreen(
                 transactions       = transactionViewModel.transactions,
