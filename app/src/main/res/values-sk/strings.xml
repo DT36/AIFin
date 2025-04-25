@@ -66,4 +66,5 @@
     <string name="date_filter">Od %s do %s</string>
     <string name="summary_title">Zhrnutie</string>
     <string name="recommendations">Odporúčania</string>
+    <string name="empty_analysis">Nie sú k dispozícii žiadne transakcie na analýzu</string>
 </resources>

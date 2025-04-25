@@ -66,4 +66,5 @@
     <string name="date_filter">From %s to %s</string>
     <string name="summary_title">Summary</string>
     <string name="recommendations">Recommendations</string>
+    <string name="empty_analysis">There aro no transactions to analyze</string>
 </resources>

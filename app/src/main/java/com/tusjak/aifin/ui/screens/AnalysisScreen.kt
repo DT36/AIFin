@@ -39,57 +39,43 @@ fun AnalysisScreen(viewModel: TransactionViewModel) {
     val context   = LocalContext.current
     val isLoading = mutable(true)
 
-    LaunchedEffect(Unit) {
-        viewModel.analyzeTransactions(context)
+    LaunchedEffect(transactions) {
+        if (transactions.isNotEmpty() && analysisResult == null) {
+            viewModel.analyzeTransactions(context)
+        }
         isLoading.value = false
     }
 
     TwoColorBackgroundScreen(
-        contentOnGreen = {
-            if (analysisResult != null) {
-                LazyColumn(
-                    modifier = M
-                        .padding(16.dp)
-                        .height(200.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    item { Text(RS.summary_title.string(), style = subtitle, color = textColor.value) }
-                    item { Text(text = analysisResult!!.summary, style = body2, color = textColor.value) }
-                }
-            }
-        },
+        contentOnGreen = {},
         contentOnWhite = {
-            if (analysisResult == null || isLoading.value) {
-                CenteredBox(M.fillMaxSize()) {
-                    Spinner()
-                }
-            } else {
-                LazyColumn(
-                    modifier = M.fillMaxWidth(),
-                    contentPadding = PaddingValues(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 100.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    item {
-                        Text(
-                            RS.recommendations.string(),
-                            style = subtitle,
-                            color = textColor.value
-                        )
-                    }
+            when{
+                transactions.isEmpty()                    -> EmptyTransactionList(message = RS.empty_analysis.string())
+                analysisResult == null || isLoading.value -> CenteredBox(M.fillMaxSize()) { Spinner() }
+                else                                      -> {
+                    LazyColumn(
+                        modifier = M.fillMaxWidth(),
+                        contentPadding = PaddingValues(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 100.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        item { Text(RS.summary_title.string(), style = subtitle, color = textColor.value) }
+                        item { Text(text = analysisResult!!.summary, style = body2, color = textColor.value) }
+                        item { Text(modifier = M.padding(top = 16.dp), text = RS.recommendations.string(), style = subtitle, color = textColor.value) }
 
-                    items(analysisResult!!.recommendations) { recommendation ->
-                        Card(
-                            modifier = M.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(
-                                containerColor = mainGreen.value
-                            )
-                        ) {
-                            Text(
-                                text = recommendation,
-                                modifier = M.padding(12.dp),
-                                style = body2,
-                                color = textColor.value
-                            )
+                        items(analysisResult!!.recommendations) { recommendation ->
+                            Card(
+                                modifier = M.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = mainGreen.value
+                                )
+                            ) {
+                                Text(
+                                    text = recommendation,
+                                    modifier = M.padding(12.dp),
+                                    style = body2,
+                                    color = textColor.value
+                                )
+                            }
                         }
                     }
                 }

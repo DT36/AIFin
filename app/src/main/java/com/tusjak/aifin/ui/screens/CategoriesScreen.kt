@@ -83,7 +83,7 @@ fun CategoriesScreen(transactions: StateFlow<List<Transaction>>, onCategoryClick
 
 
             CenteredColumn {
-                Row(M.fillMaxWidth().padding(horizontal = 32.dp), horizontalArrangement = Arrangement.spacedBy(32.dp)) {
+                Row(M.fillMaxWidth().padding(horizontal = 32.dp, vertical = 16.dp), horizontalArrangement = Arrangement.spacedBy(32.dp)) {
 
                     CenteredColumn(
                         M
