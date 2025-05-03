@@ -157,6 +157,8 @@ fun AIFinApp(
         }
     }
 
+    val launchScreen by remember(currentRoute) { derivedStateOf { currentRoute == Screen.LAUNCH_MENU.name } }
+
     val topBarTitle = when (currentRoute?.substringBefore("/{") ?: currentRoute) {
         Screen.HOME.name         -> getGreetingByTime()
         Screen.ANALYSIS.name     -> RS.title_analysis.string()
@@ -173,41 +175,43 @@ fun AIFinApp(
         containerColor      = Color.Transparent,
         contentWindowInsets = WindowInsets.safeDrawing,
         topBar              = {
-            if (showBottomBar) TopAppBar(
-                title  = { Text(topBarTitle, color = textColor.value, style = headline4) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = mainGreen.value
-                ),
-                actions = {
-                    if (currentRoute == Screen.HOME.name)
-                    Text(
-                        modifier = M
-                            .clickable { onSignOutClick() }
-                            .padding(horizontal = 16.dp),
-                        text     = stringResource(R.string.log_out),
-                        color    = oceanBlue,
-                        style    = button
-                    )
-                }
-
-            )
-            else CenterAlignedTopAppBar(
-                title          = { Text(topBarTitle, color = textColor.value, style = headline4) },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navController.popBackStack()
-                    }) {
-                        Icon(
-                            Icons.AutoMirrored.Filled.ArrowBack,
-                            tint = textColor.value,
-                            contentDescription = "Back"
-                        )
+            when {
+                showBottomBar -> TopAppBar(
+                    title  = { Text(topBarTitle, color = textColor.value, style = headline4) },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = mainGreen.value
+                    ),
+                    actions = {
+                        if (currentRoute == Screen.HOME.name)
+                            Text(
+                                modifier = M
+                                    .clickable { onSignOutClick() }
+                                    .padding(horizontal = 16.dp),
+                                text     = stringResource(R.string.log_out),
+                                color    = oceanBlue,
+                                style    = button
+                            )
                     }
-                },
-                colors         = TopAppBarDefaults.topAppBarColors(
-                    containerColor = mainGreen.value
                 )
-            )
+                launchScreen -> {}
+                else         -> CenterAlignedTopAppBar(
+                    title          = { Text(topBarTitle, color = textColor.value, style = headline4) },
+                    navigationIcon = {
+                        IconButton(onClick = {
+                            navController.popBackStack()
+                        }) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.ArrowBack,
+                                tint = textColor.value,
+                                contentDescription = "Back"
+                            )
+                        }
+                    },
+                    colors         = TopAppBarDefaults.topAppBarColors(
+                        containerColor = mainGreen.value
+                    )
+                )
+            }
         },
         bottomBar = {
             if (showBottomBar) BottomNavigationBar(navController)
